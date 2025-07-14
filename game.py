@@ -92,11 +92,50 @@ def create_scenes():
             "return": "trailer",
             "pick up tooth": pick_up_tooth,
             "inventory": show_inventory,
+            "go to gas station": "gas_station",
         },
         on_enter=dirt_road_enter,
     )
 
-    return {scene.name: scene for scene in [trailer, dirt_road]}
+    def gas_station_enter(state):
+        if not state.flags.get("visited_gas_station"):
+            print(
+                "Travis pushes open the smeared glass door of the Fill-'Er-Up. The "
+                "air reeks of burnt coffee and diesel fumes. Behind the counter, a "
+                "gap-toothed fella hawks lotto tickets and gator jerky with a grin."
+            )
+            state.flags["visited_gas_station"] = True
+
+    def buy_jerky(state):
+        print("Travis tosses a few crumpled bills on the counter for some Slim Jims.")
+        state.inventory.append("Slim Jims")
+
+    def talk_cashier(state):
+        if not state.flags.get("heard_shortcut"):
+            print(
+                "The cashier leans in close, whisperin' about a dirt trail that'll "
+                "get you to Ginnie Springs quicker than a gator on ice skates."
+            )
+            state.flags["heard_shortcut"] = True
+        else:
+            print("The cashier just nods, his secret already spilled.")
+
+    gas_station = Scene(
+        "gas_station",
+        (
+            "Dusty aisles of the local gas station stretch before Travis, lit by "
+            "flickering fluorescent tubes."
+        ),
+        {
+            "buy jerky": buy_jerky,
+            "talk to cashier": talk_cashier,
+            "leave": "dirt_road",
+            "inventory": show_inventory,
+        },
+        on_enter=gas_station_enter,
+    )
+
+    return {scene.name: scene for scene in [trailer, dirt_road, gas_station]}
 
 
 def main():
