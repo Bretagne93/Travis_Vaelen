@@ -1,4 +1,11 @@
 def main():
+    inventory = [
+        "A half-empty flask labeled \"'shine\"",
+        "A bag of gator jerky",
+        "An empty can of bug spray",
+        "A VHS tape labeled \"Raise Hell- Praise Dale '98 – DO NOT ERASE\"",
+        "A folded-up love note from Saeva Venia 💋",
+    ]
     print("Howdy, y'all! Welcome to Travis Vaelen's world of gator-gut glory.")
     print("Travis jolts awake in his rusty trailer after dreamin' of HOA demons.")
     print(
@@ -6,7 +13,7 @@ def main():
         "and his trusty shotgun restin' across an altar made from old hubcaps."
     )
 
-    choice = input("Do ya wanna 'step outside', 'check the fridge', or 'look in the mirror'? ").strip().lower()
+    choice = input("Do ya wanna 'step outside', 'check the fridge', 'look in the mirror', or 'inventory'? ").strip().lower()
 
     if 'step' in choice or 'outside' in choice:
         print(
@@ -35,6 +42,10 @@ def main():
         print(
             "With Florida-man swagger dialed up to eleven, Travis winks at himself, absolutely unhinged and lovin' it."
         )
+    elif 'inventory' in choice:
+        print("Travis pats his pockets and rummages through his stash:")
+        for item in inventory:
+            print(f"- {item}")
     else:
         print(
             "Travis scratches his head, wonderin' how you even managed that choice. "
