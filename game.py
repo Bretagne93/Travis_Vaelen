@@ -198,11 +198,47 @@ def create_scenes():
         on_enter=mole_cricket_enter,
     )
 
+    def stage_backroom_intro(state):
+        print(
+            "The backstage reeks of spilled beer, sweat, and something that might be regret. "
+            "Bubba Slim is tuning his bass, dressed in a sleeveless tee that reads ‘WAP = Whiskey And Pickles.’"
+        )
+        print(
+            "Bubba tells Travis he can get the lighter, but only if Travis plays “Possum Kingdom” by the Toadies with the band."
+        )
+        lyrics = [
+            "DO YOU WANNA DIE?",
+            "MAKE UP YOUR MIND",
+            "DO YOU WANNA HOLD HER?",
+        ]
+        for line in lyrics:
+            reply = input(f"{line} ").strip().upper()
+            if reply != line:
+                print(
+                    "Travis hits a sour note. Bubba frowns like a man betrayed by his own blood."
+                )
+                return
+        print(
+            "The final chord rings out and Bubba whoops with pride, handing Travis a Zippo lighter with a naked lady on it."
+        )
+        state.inventory.append("Zippo lighter with a naked lady on it")
+        state.move_to("club_exit")
+
     stage_backroom = Scene(
         "stage_backroom",
         "Heavy curtains close behind Travis as he slips into the backstage haze of cheap perfume and spilled beer.",
         {
             "leave": "strip_club",
+            "inventory": show_inventory,
+        },
+        on_enter=stage_backroom_intro,
+    )
+
+    club_exit = Scene(
+        "club_exit",
+        "With the lighter in hand and the crowd still roaring, Travis steps into the muggy night behind the club.",
+        {
+            "leave": "dirt_road",
             "inventory": show_inventory,
         },
     )
@@ -216,6 +252,7 @@ def create_scenes():
             strip_club,
             mole_cricket_showdown,
             stage_backroom,
+            club_exit,
         ]
     }
 
