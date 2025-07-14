@@ -140,11 +140,84 @@ def create_scenes():
             "talk to cashier": talk_cashier,
             "leave": "dirt_road",
             "inventory": show_inventory,
+            "go to strip club": "strip_club",
         },
         on_enter=gas_station_enter,
     )
 
-    return {scene.name: scene for scene in [trailer, dirt_road, gas_station]}
+    def mole_cricket_enter(state):
+        print(
+            "The lights dim and a shadow slinks from the fog machine. Mole Cricket steps into view\u2014mud-slicked thighs, rhinestone flip-flops, daisy dukes from 2008, a bikini top made of fishing net, and a vape cloud that smells like watermelon and shame."
+        )
+        rounds = 0
+        while rounds < 3:
+            choice = input("Your move? ").strip().lower()
+            if choice in ("flex lat spread", "quote saeva"):
+                rounds += 1
+            elif choice == "offer jerky":
+                rounds += 1
+            elif choice in ("run", "say 'who\u2019s dale?'", "say 'who's dale?'", "bite lip"):
+                if "Bag of gator jerky" in state.inventory:
+                    state.inventory.remove("Bag of gator jerky")
+                print("Travis moans her name in his sleep now. Saeva\u2019s gonna be pissed.")
+                state.move_to("mole_cricket_showdown")
+                return
+            else:
+                if "Bag of gator jerky" in state.inventory:
+                    state.inventory.remove("Bag of gator jerky")
+                print("Travis moans her name in his sleep now. Saeva\u2019s gonna be pissed.")
+                state.move_to("mole_cricket_showdown")
+                return
+
+        print("Mole Cricket snarls: 'You ain\u2019t even worth suckin\u2019 the soul out of.'")
+        state.inventory.append("Blood-Slicked Lip Gloss")
+        state.flags["beat_mole_cricket"] = True
+        state.move_to("stage_backroom")
+
+    def attempt_stage(state):
+        if not state.flags.get("beat_mole_cricket"):
+            return "mole_cricket_showdown"
+        return "stage_backroom"
+
+    strip_club = Scene(
+        "strip_club",
+        (
+            "Neon signs flicker above sticky floors while the bass rattles Travis's ribs. Half-interested dancers twirl as the crowd hollers."
+        ),
+        {
+            "approach stage": attempt_stage,
+            "leave": "dirt_road",
+            "inventory": show_inventory,
+        },
+    )
+
+    mole_cricket_showdown = Scene(
+        "mole_cricket_showdown",
+        "Mole Cricket blocks the path to the stage, eyes glittering with menace.",
+        {},
+        on_enter=mole_cricket_enter,
+    )
+
+    stage_backroom = Scene(
+        "stage_backroom",
+        "Heavy curtains close behind Travis as he slips into the backstage haze of cheap perfume and spilled beer.",
+        {
+            "leave": "strip_club",
+            "inventory": show_inventory,
+        },
+    )
+
+    return {
+        scene.name: scene
+        for scene in [
+            trailer,
+            dirt_road,
+            gas_station,
+            strip_club,
+            mole_cricket_showdown,
+            stage_backroom,
+        ]
+    }
 
 
 def main():
