@@ -1,5 +1,5 @@
 def main():
-    print("Howdy, y'all! Welcome to Travis Vaelen's world of gator-gut glory.")
+    print("Welcome to Travis Vaelen's world of gator-gut glory.")
     print("Travis jolts awake in his rusty trailer after dreamin' of HOA demons.")
     print(
         "Around him: dusty gator heads on the walls, beer cans stacked like a shrine, "
@@ -21,7 +21,7 @@ def main():
         )
     elif 'mirror' in choice:
         print(
-            "Travis catches a glimpse of himself in the cracked bathroom mirror and can't help but grin."
+            "Travis catches a glimpse of himself in the cracked bathroom mirror and can't help but sport a mustachioed grin."
         )
         print(
             "Golden mullet flowing like swamp water at sunset, crowned by Pit Vipers that could blind a gator."
