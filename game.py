@@ -67,6 +67,14 @@ def create_scenes():
         else:
             print("There ain't no tooth lyin' around here.")
 
+    def look_in_mirror(state):
+        print("A golden mullet, gleaming like sunrise on the Suwannee")
+        print("Pit Viper sunglasses and a mustache sharp enough to slice jerky")
+        print(
+            "A flamingo tattoo on his right bicep with the words \u201cSaeva Venia\u201d inked beneath it"
+        )
+        print("A lat spread so glorious, it was carved by ancient fanboat spirits")
+
     trailer = Scene(
         "trailer",
         (
@@ -78,6 +86,7 @@ def create_scenes():
             "step outside": "dirt_road",
             "leave": "dirt_road",
             "inventory": show_inventory,
+            "look in mirror": look_in_mirror,
         },
     )
 
@@ -147,9 +156,9 @@ def main():
         scene = state.current_scene
         print(f"\n=== {scene.name.upper()} ===")
         print(scene.description)
-        commands = ", ".join(scene.choices.keys())
-        if commands:
-            print(f"\U0001F40A Available commands: {commands}")
+        print("What now? You can:")
+        for cmd in scene.choices:
+            print(f"- {cmd}")
         choice = input("What now? ").strip().lower()
 
         if choice == "quit":
