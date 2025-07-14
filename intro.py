@@ -6,7 +6,7 @@ def main():
         "and his trusty shotgun restin' across an altar made from old hubcaps."
     )
 
-    choice = input("Do ya wanna 'step outside' or 'check the fridge'? ").strip().lower()
+    choice = input("Do ya wanna 'step outside', 'check the fridge', or 'look in the mirror'? ").strip().lower()
 
     if 'step' in choice or 'outside' in choice:
         print(
@@ -18,6 +18,22 @@ def main():
         print(
             "He yanks open the fridge, findin' leftover possum stew next to a jar of "
             "glowin' moonshine. Breakfast of champions!"
+        )
+    elif 'mirror' in choice:
+        print(
+            "Travis catches a glimpse of himself in the cracked bathroom mirror and can't help but grin."
+        )
+        print(
+            "Golden mullet flowing like swamp water at sunset, crowned by Pit Vipers that could blind a gator."
+        )
+        print(
+            "His right bicep flexes, showin' off a flamingo tattoo that reads 'Saeva Venia' in hot-pink glory."
+        )
+        print(
+            "He spreads his lats wide enough to block out the trailer door, a god among men in a single-wide."
+        )
+        print(
+            "With Florida-man swagger dialed up to eleven, Travis winks at himself, absolutely unhinged and lovin' it."
         )
     else:
         print(
