@@ -59,6 +59,9 @@ def main():
         scene = state.current_scene
         print(f"\n=== {scene.name.upper()} ===")
         print(scene.description)
+        commands = ", ".join(scene.choices.keys())
+        if commands:
+            print(f"\U0001F40A Available commands: {commands}")
         choice = input("What now? ").strip().lower()
 
         if choice == "quit":
