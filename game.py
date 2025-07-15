@@ -1,3 +1,5 @@
+import sys
+
 class Scene:
     """A single location in the game world."""
 
@@ -240,6 +242,51 @@ def create_scenes():
         {
             "leave": "dirt_road",
             "inventory": show_inventory,
+            "go to cypress tree": "cypress_throne",
+        },
+    )
+
+    cypress_throne_desc = (
+        "Travis reaches the base of a massive cypress tree draped in Spanish moss. "
+        "Saeva Venia is trapped at the top, held hostage by a stinking, muscular cryptid: the Skunk Ape.\n"
+        "The air reeks of sweat, cologne, and Mountain Dew.\n"
+        "The Skunk Ape grunts and shows off his \"swamp bride\" to the frogs."
+    )
+
+    def look_around_cypress(state):
+        print(cypress_throne_desc)
+
+    def fight_skunk_ape(state):
+        has_lighter = any("Zippo lighter" in item for item in state.inventory)
+        has_jerky = "Bag of gator jerky" in state.inventory
+        has_floaty = "Rubber duck floaty" in state.inventory
+        if has_lighter and has_jerky and has_floaty:
+            print(
+                "Travis cracks his neck, lights the Zippo, and throws gator jerky like a damn grenade."
+            )
+            print("The Skunk Ape sniffs, distracted.")
+            print(
+                "With a mighty yell, Travis belly flops off a cypress root, floaty deployed, and dropkicks the horny bastard into the mud."
+            )
+            print(
+                "Saeva leaps into his arms, and they descend like trashy angels from a moss-draped heaven."
+            )
+            print('"Got my girl, got my floaty, got my shine. Let\u2019s fuckin\u2019 go."')
+            import sys
+            sys.exit(0)
+        else:
+            print(
+                "The Skunk Ape roars and beats his chest with swamp-soaked confidence."
+            )
+            print("You ain\u2019t ready for this fight, son.")
+
+    cypress_throne = Scene(
+        "cypress_throne",
+        cypress_throne_desc,
+        {
+            "fight": fight_skunk_ape,
+            "look around": look_around_cypress,
+            "inventory": show_inventory,
         },
     )
 
@@ -253,6 +300,7 @@ def create_scenes():
             mole_cricket_showdown,
             stage_backroom,
             club_exit,
+            cypress_throne,
         ]
     }
 
