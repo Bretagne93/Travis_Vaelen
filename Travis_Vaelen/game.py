@@ -1,3 +1,5 @@
+import sys
+
 class Scene:
     """A single location in the game world."""
 
@@ -198,11 +200,92 @@ def create_scenes():
         on_enter=mole_cricket_enter,
     )
 
+    def stage_backroom_intro(state):
+        print(
+            "The backstage reeks of spilled beer, sweat, and something that might be regret. "
+            "Bubba Slim is tuning his bass, dressed in a sleeveless tee that reads ‘WAP = Whiskey And Pickles.’"
+        )
+        print(
+            "Bubba tells Travis he can get the lighter, but only if Travis plays “Possum Kingdom” by the Toadies with the band."
+        )
+        lyrics = [
+            "DO YOU WANNA DIE?",
+            "MAKE UP YOUR MIND",
+            "DO YOU WANNA HOLD HER?",
+        ]
+        for line in lyrics:
+            reply = input(f"{line} ").strip().upper()
+            if reply != line:
+                print(
+                    "Travis hits a sour note. Bubba frowns like a man betrayed by his own blood."
+                )
+                return
+        print(
+            "The final chord rings out and Bubba whoops with pride, handing Travis a Zippo lighter with a naked lady on it."
+        )
+        state.inventory.append("Zippo lighter with a naked lady on it")
+        state.move_to("club_exit")
+
     stage_backroom = Scene(
         "stage_backroom",
         "Heavy curtains close behind Travis as he slips into the backstage haze of cheap perfume and spilled beer.",
         {
             "leave": "strip_club",
+            "inventory": show_inventory,
+        },
+        on_enter=stage_backroom_intro,
+    )
+
+    club_exit = Scene(
+        "club_exit",
+        "With the lighter in hand and the crowd still roaring, Travis steps into the muggy night behind the club.",
+        {
+            "leave": "dirt_road",
+            "inventory": show_inventory,
+            "go to cypress tree": "cypress_throne",
+        },
+    )
+
+    cypress_throne_desc = (
+        "Travis reaches the base of a massive cypress tree draped in Spanish moss. "
+        "Saeva Venia is trapped at the top, held hostage by a stinking, muscular cryptid: the Skunk Ape.\n"
+        "The air reeks of sweat, cologne, and Mountain Dew.\n"
+        "The Skunk Ape grunts and shows off his \"swamp bride\" to the frogs."
+    )
+
+    def look_around_cypress(state):
+        print(cypress_throne_desc)
+
+    def fight_skunk_ape(state):
+        has_lighter = any("Zippo lighter" in item for item in state.inventory)
+        has_jerky = "Bag of gator jerky" in state.inventory
+        has_floaty = "Rubber duck floaty" in state.inventory
+        if has_lighter and has_jerky and has_floaty:
+            print(
+                "Travis cracks his neck, lights the Zippo, and throws gator jerky like a damn grenade."
+            )
+            print("The Skunk Ape sniffs, distracted.")
+            print(
+                "With a mighty yell, Travis belly flops off a cypress root, floaty deployed, and dropkicks the horny bastard into the mud."
+            )
+            print(
+                "Saeva leaps into his arms, and they descend like trashy angels from a moss-draped heaven."
+            )
+            print('"Got my girl, got my floaty, got my shine. Let\u2019s fuckin\u2019 go."')
+            import sys
+            sys.exit(0)
+        else:
+            print(
+                "The Skunk Ape roars and beats his chest with swamp-soaked confidence."
+            )
+            print("You ain\u2019t ready for this fight, son.")
+
+    cypress_throne = Scene(
+        "cypress_throne",
+        cypress_throne_desc,
+        {
+            "fight": fight_skunk_ape,
+            "look around": look_around_cypress,
             "inventory": show_inventory,
         },
     )
@@ -216,6 +299,8 @@ def create_scenes():
             strip_club,
             mole_cricket_showdown,
             stage_backroom,
+            club_exit,
+            cypress_throne,
         ]
     }
 
