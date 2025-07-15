@@ -336,8 +336,8 @@ def create_scenes():
         "walmart_after_zombies",
         "The barricade is open and the ranger waits to guide you toward the springs.",
         {
-            "go to springs": "cypress_springs",
-            "head to ginnie": "cypress_springs",
+            "go to springs": "ginnie_springs",
+            "head to ginnie": "ginnie_springs",
             "inventory": show_inventory,
             "leave": "dirt_road",
         },
@@ -522,19 +522,19 @@ def create_scenes():
         {
             "leave": "dirt_road",
             "inventory": show_inventory,
-            "go to cypress springs": "cypress_springs",
+            "go to ginnie springs": "ginnie_springs",
         },
     )
 
-    cypress_throne_desc = (
+    ginnie_throne_desc = (
         "Travis reaches the base of a massive cypress tree draped in Spanish moss. "
         "Saeva Venia is trapped at the top, held hostage by a stinking, muscular cryptid: the Skunk Ape.\n"
         "The air reeks of sweat, cologne, and Mountain Dew.\n"
         "The Skunk Ape grunts and shows off his \"swamp bride\" to the frogs."
     )
 
-    def look_around_cypress(state):
-        print(cypress_throne_desc)
+    def look_around_ginnie(state):
+        print(ginnie_throne_desc)
 
     def fight_skunk_ape(state):
         has_lighter = any("Zippo lighter" in item for item in state.inventory)
@@ -549,27 +549,27 @@ def create_scenes():
                 "With a mighty yell, Travis belly flops off a cypress root, floaty deployed, and dropkicks the horny bastard into the mud."
             )
             print(
-                "Saeva isn't here yet, but the Skunk Ape scampers off, leaving a trail straight toward Cypress Springs."
+                "Saeva isn't here yet, but the Skunk Ape scampers off, leaving a trail straight toward Ginnie Springs."
             )
-            state.move_to("cypress_springs")
+            state.move_to("ginnie_springs")
         else:
             print(
                 "The Skunk Ape roars and beats his chest with swamp-soaked confidence."
             )
             print("You ain\u2019t ready for this fight, son.")
 
-    cypress_throne = Scene(
-        "cypress_throne",
-        cypress_throne_desc,
+    ginnie_throne = Scene(
+        "ginnie_throne",
+        ginnie_throne_desc,
         {
             "fight": fight_skunk_ape,
-            "look around": look_around_cypress,
+            "look around": look_around_ginnie_springs,
             "inventory": show_inventory,
         },
     )
 
-    cypress_springs_desc = (
-        "Travis steps to the edge of Cypress Springs, the water glistening under the moon. "
+    ginnie_springs_desc = (
+        "Travis steps to the edge of Ginnie Springs, the water glistening under the moon. "
         "A bloated shadow rises from the depths—a seductive, unhinged Water Bug ready to strike."
     )
 
@@ -578,8 +578,8 @@ def create_scenes():
         print("With a devastating judo kick, she yeets the Water Bug into the woods.")
         print("The Skunk Ape lumbers out, catching the bug mid-air before disappearing into the swamp.")
         print("The skies clear and the cicadas sing. Travis is stunned.")
-        print("\nTravis and Saeva spark up doobies from their Gatorade Bong.")
-        print("Floating down the river on the Rubber Duck Floaty, they snack on gas station goodies.")
+        print("\nTravis and Saeva spark up some doobies from their stash.")
+        print("Floating down the river on the Rubber Duck and Flamingo floaties, they snack on gas station goodies.")
         print('Saeva whispers, "Took you long enough, swamp god."')
         print("THE END – Together Forever, Memorial Day 2025")
         import sys
@@ -625,12 +625,12 @@ def create_scenes():
             return
         water_bug_cutscene(state)
 
-    cypress_springs = Scene(
-        "cypress_springs",
-        cypress_springs_desc,
+    ginnie_springs = Scene(
+        "ginnie_springs",
+        ginnie_springs_desc,
         {
             "fight": water_bug_fight,
-            "look around": lambda state: print(cypress_springs_desc),
+            "look around": lambda state: print(ginnie_springs_desc),
             "inventory": show_inventory,
         },
     )
@@ -649,8 +649,8 @@ def create_scenes():
             club_exit,
             walmart,
             walmart_after_zombies,
-            cypress_throne,
-            cypress_springs,
+            ginnie_throne,
+            ginnie_springs,
         ]
     }
 
