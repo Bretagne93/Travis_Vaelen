@@ -569,23 +569,36 @@ def create_scenes():
     )
 
     cypress_springs_desc = (
-        "Travis steps to the edge of Cypress Springs, the water glistening under the moon. "
-        "A bloated shadow rises from the depths—a seductive, unhinged Water Bug ready to strike."
+        "Bass rattles the trees as Travis wades into Cypress Springs. Neon lights flicker off the water "
+        "and clouds of vape mist swirl across the surface. "
+        "A glitter-soaked shape rises from the depths—a deranged Water Bug part stripper, part toxic ex, "
+        "all nightmare."
     )
 
     def water_bug_cutscene(state):
-        print("\nSaeva Venia bursts from the treeline. \"Don’t touch my man, BITCH!\"")
-        print("With a devastating judo kick, she yeets the Water Bug into the woods.")
-        print("The Skunk Ape lumbers out, catching the bug mid-air before disappearing into the swamp.")
-        print("The skies clear and the cicadas sing. Travis is stunned.")
-        print("\nTravis and Saeva spark up doobies from their Gatorade Bong.")
-        print("Floating down the river on the Rubber Duck Floaty, they snack on gas station goodies.")
-        print('Saeva whispers, "Took you long enough, swamp god."')
-        print("THE END – Together Forever, Memorial Day 2025")
+        print('"Don\u2019t touch my man, BITCH!"')
+        print("Suddenly, Saeva Venia descends from the cypress canopy.")
+        print("With glowing eyes and bare feet slapping water, she launches a judo kick.")
+        print("The Water Bug is sent flying into the woods.")
+        print(
+            "A huge hairy arm bursts from the brush\u2014Skunk Ape catches her mid-air and vanishes into the trees with his new bride."
+        )
+        print("Travis lights a doobie with Saeva as they recline on the Rubber Duck Floaty.")
+        print("They pass the Gatorade Bong back and forth.")
+        print('"Took you long enough, swamp god," she murmurs, licking salt off his neck.')
+        print("The spring water sparkles. The cicadas scream. All is right in Florida.")
+        print("\n--- THE END ---\n")
+        print("Together Forever. Memorial Day 2025.")
         import sys
         sys.exit(0)
 
     def water_bug_fight(state):
+        required = ["Rubber duck floaty", "Gatorade Bong", "Cooler of Snacks"]
+        if not all(item in state.inventory for item in required):
+            print("Travis ain't properly kitted out for this throwdown. Best gather more gear.")
+            state.move_to("dirt_road")
+            return
+
         print("The Water Bug sways from the shallows, wings dripping. She eyes Travis with filthy intent.")
         boss_hp = 4
         travis_hp = 3
@@ -593,20 +606,21 @@ def create_scenes():
         confused = 0
         while boss_hp > 1 and travis_hp > 0:
             if confused:
-                print("\nTravis is woozy from the Toxic Twerk! -2 to his next move.")
-            print("\nWhat's your move?")
-            print("- flex (STR)")
-            print("- flirt (CHA)")
-            print("- yeehaw (WTF)")
-            move = input("> ").strip().lower()
+                auto_move = random.choice(["flex", "flirt", "yeehaw"])
+                print(f"\nTravis reels from the Toxic Twerk and accidentally performs '{auto_move}'.")
+                move = auto_move
+                confused = 0
+            else:
+                print("\nWhat's your move?")
+                print("- flex (STR)")
+                print("- flirt (CHA)")
+                print("- yeehaw (WTF)")
+                move = input("> ").strip().lower()
             if move not in ("flex", "flirt", "yeehaw"):
                 print("Travis fumbles, unsure what that even was.")
                 continue
             roll = random.randint(1, 20)
             mod = stats.get(move, 0)
-            if confused:
-                mod -= 2
-                confused = 0
             total = roll + mod
             print(f"You rolled a {roll} + {mod} = {total}!")
             if total >= 13:
