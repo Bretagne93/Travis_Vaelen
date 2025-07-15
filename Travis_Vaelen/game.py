@@ -625,6 +625,36 @@ def create_scenes():
             return
         water_bug_cutscene(state)
 
+def water_bug_cutscene(state):
+    print("\nSaeva Venia bursts from the treeline. \"Don’t touch my man, BITCH!\"")
+    print("With a devastating judo kick, she yeets the Water Bug into the woods.")
+    print("The Skunk Ape lumbers out, catching the bug mid-air before disappearing into the swamp.")
+    print("The skies clear and the cicadas sing. Travis is stunned.")
+    print("\nTravis and Saeva spark up some doobies from their stash.")
+    print("Floating down the river on the Rubber Duck and Flamingo floaties, they snack on gas station goodies.")
+    print('Saeva whispers, "Took you long enough, swamp god."')
+
+    print("\n🌊💋  THE END – Together Forever, Memorial Day 2025 💋🌊\n")
+    print("=== CREDITS ===")
+    print("Code, Chaos & Carnage: You & Codex")
+    print("Lead Character: Travis Vaelen, Florida's Swamp God")
+    print("Boss Fights & Bad Bitches: Lot Lizard, Mole Cricket, Water Bug")
+    print("Final Boss Assist: Saeva Venia (Certified Menace)")
+    print("Special Thanks: The State of Florida, Pit Viper™, and You")
+
+    while True:
+        choice = input("\nWould you like to play again? (yes/no): ").strip().lower()
+        if choice in ("yes", "y"):
+            import os
+            os.execv(__file__, ['python'] + sys.argv)  # Restart the script
+        elif choice in ("no", "n"):
+            print("Later, gator. May the river always carry you home.")
+            import sys
+            sys.exit(0)
+        else:
+            print("Didn’t catch that, swamp cowboy. Type 'yes' or 'no'.")
+
+
     ginnie_springs = Scene(
         "ginnie_springs",
         ginnie_springs_desc,
