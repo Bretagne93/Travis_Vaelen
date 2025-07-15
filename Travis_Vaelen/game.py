@@ -80,15 +80,31 @@ def create_scenes():
     trailer = Scene(
         "trailer",
         (
-            "Travis jolts awake in his single-wide temple, walls plastered with "
-            "gator jaws and NASCAR posters. The swamp hums like a choir of "
-            "mosquitoes outside."
+            "Travis jolts awake in his sacred single-wide, air thick with mosquito fog and last night\u2019s regret. "
+            "The walls are paper-thin, adorned with gator jawbones, fan-blown NASCAR posters, and a deer skull "
+            "wearing a camo trucker hat that reads 'Born to Mullet.'\n\n"
+            "The floor creaks under his boots as he steps past a tipped-over beer can pyramid and an ancient rug "
+            "stained with pork grease and maybe something unholy. A shrine of empty Slim Jim wrappers rests beneath "
+            "a faded Polaroid of him and Saeva\u2014her lipstick smudged on his cheek, his eyes full of feral devotion.\n\n"
+            "A folded note lies on the counter, held down by a bottle of hot sauce and a shell casing.\n\n"
+            "Outside, the swamp buzzes like a live wire. Travis\u2019s Toyota glows red in the morning sun, jacked and ready, "
+            "but almost outta gas.\n\n"
+            "Somewhere in the ether, his cousin Malus growls with pride.\n"
         ),
         {
             "step outside": "dirt_road",
             "leave": "dirt_road",
-            "inventory": show_inventory,
+            "look in fridge": lambda state: print(
+                "The fridge hums like a dying possum. Inside: 2 hot dogs, 1 open Bud Heavy, a jar of expired pickled okra, "
+                "and a half-smoked joint in a butter dish labeled 'emergency.'"
+            ),
+            "read note": lambda state: print(
+                "The note is written in lipstick on crumpled receipt paper. It reads:\n\n"
+                '\"Memorial Day. Ginnie Springs. Bring the ducky float, the shine, and that sinful tongue. I\u2019ll be waiting.\"\n\n'
+                "- Saeva \ud83d\udc8b"
+            ),
             "look in mirror": look_in_mirror,
+            "inventory": show_inventory,
         },
     )
 
