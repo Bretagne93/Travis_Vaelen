@@ -99,10 +99,11 @@ def create_scenes():
                 "and a half-smoked joint in a butter dish labeled 'emergency.'"
             ),
             "read note": lambda state: print(
-                "The note is written in lipstick on crumpled receipt paper. It reads:\n\n"
-                '\"Memorial Day. Ginnie Springs. Bring the ducky float, the shine, and that sinful tongue. I\u2019ll be waiting.\"\n\n'
-                "- Saeva \ud83d\udc8b"
-            ),
+            "The note is written in lipstick on crumpled receipt paper. It reads:\n\n"
+            "\"Memorial Day. Ginnie Springs. Bring the ducky float, the shine, and that sinful tongue. I’ll be waiting.\"\n\n"
+            "- Saeva (kiss mark)"
+   ),
+
             "look in mirror": look_in_mirror,
             "inventory": show_inventory,
         },
