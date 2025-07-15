@@ -1,4 +1,5 @@
 import sys
+import random
 
 class Scene:
     """A single location in the game world."""
@@ -33,6 +34,11 @@ class GameState:
             "Bag of gator jerky",
         ]
         self.flags = {}
+        self.flags["travis_stats"] = {
+            "flex": 2,
+            "flirt": 3,
+            "yeehaw": 1,
+        }
         # run the starting scene's enter hook
         self.current_scene.on_enter(self)
 
@@ -161,20 +167,80 @@ def create_scenes():
         else:
             print("The cashier just nods, his secret already spilled.")
 
+    def lot_lizard_fight(state):
+        print(
+            "A raspy giggle echoes through the aisles as a woman in leopard print leggings and a crop top that says 'Daddy\u2019s Lil Toe Sucker' slinks into view.\n"
+            "Her nails click like acrylic claws on the chip rack.\n"
+            "The Lot Lizard is here."
+        )
+
+        boss_hp = 3
+        travis_hp = 3
+        stats = state.flags["travis_stats"]
+
+        while boss_hp > 0 and travis_hp > 0:
+            print("\nWhat\u2019s your move?")
+            print("- flex (STR)")
+            print("- flirt (CHA)")
+            print("- yeehaw (WTF)")
+            move = input(">").strip().lower()
+
+            if move not in ("flex", "flirt", "yeehaw"):
+                print("Travis just stands there scratchin\u2019 his ass. That ain\u2019t a move.")
+                continue
+
+            roll = random.randint(1, 20)
+            mod = stats.get(move, 0)
+            total = roll + mod
+
+            print(f"You rolled a {roll} + {mod} = {total}!")
+
+            if total >= 12:
+                print("Direct hit! Lot Lizard hisses, knocking over a Mountain Dew display as she stumbles.")
+                boss_hp -= 1
+            else:
+                print("She licks her thumb and touches your forehead. You feel *unholy.*")
+                travis_hp -= 1
+
+        if boss_hp <= 0:
+            print("\nWith a final shriek, she flees through the automatic doors, leaving behind a trail of fake lashes and shame.")
+            print("You find a gas can and a snack cooler where she once stood.")
+            state.inventory.append("Gas Can")
+            state.inventory.append("Cooler of Snacks")
+            state.flags["beat_lizard"] = True
+            state.move_to("gas_station_after_lizard")
+        else:
+            print("\nTravis drops to one knee, overwhelmed by the sheer chaotic thirst.")
+            print("He needs to regroup before tryin' that again.")
+            state.move_to("dirt_road")
+
     gas_station = Scene(
         "gas_station",
         (
-            "Dusty aisles of the local gas station stretch before Travis, lit by "
-            "flickering fluorescent tubes."
+            "The air inside the Fill-'Er-Up is thick with burnt coffee and years of nicotine. "
+            "Lotto tickets peel off the counter like dying leaves.\n"
+            "A wall of expired jerky dares you to bite. Something shifts near the energy drink fridge…"
         ),
         {
-            "buy jerky": buy_jerky,
+            "approach snacks": lambda state: lot_lizard_fight(state),
+            "inventory": show_inventory,
+            "leave": "dirt_road",
+        },
+        on_enter=gas_station_enter,
+    )
+
+    gas_station_after_lizard = Scene(
+        "gas_station_after_lizard",
+        (
+            "The gas station is quiet now. The cashier peeks over the counter, impressed.\n"
+            '"Shortcut to Ginnie? Dirt trail past the old bait shop. Only Malus ever drove it faster."\n'
+            "You feel his gaze in the gator jerky aisle."
+        ),
+        {
             "talk to cashier": talk_cashier,
             "leave": "dirt_road",
             "inventory": show_inventory,
-            "go to strip club": "strip_club",
         },
-        on_enter=gas_station_enter,
     )
 
     def mole_cricket_enter(state):
@@ -326,6 +392,7 @@ def create_scenes():
             trailer,
             dirt_road,
             gas_station,
+            gas_station_after_lizard,
             strip_club,
             mole_cricket_showdown,
             stage_backroom,
