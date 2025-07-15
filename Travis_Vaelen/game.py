@@ -563,7 +563,7 @@ def create_scenes():
         ginnie_throne_desc,
         {
             "fight": fight_skunk_ape,
-            "look around": look_around_ginnie_springs,
+            "look around": look_around_ginnie,
             "inventory": show_inventory,
         },
     )
