@@ -336,8 +336,8 @@ def create_scenes():
         "walmart_after_zombies",
         "The barricade is open and the ranger waits to guide you toward the springs.",
         {
-            "go to springs": "cypress_throne",
-            "head to ginnie": "cypress_throne",
+            "go to springs": "cypress_springs",
+            "head to ginnie": "cypress_springs",
             "inventory": show_inventory,
             "leave": "dirt_road",
         },
@@ -522,7 +522,7 @@ def create_scenes():
         {
             "leave": "dirt_road",
             "inventory": show_inventory,
-            "go to cypress tree": "cypress_throne",
+            "go to cypress springs": "cypress_springs",
         },
     )
 
@@ -549,11 +549,9 @@ def create_scenes():
                 "With a mighty yell, Travis belly flops off a cypress root, floaty deployed, and dropkicks the horny bastard into the mud."
             )
             print(
-                "Saeva leaps into his arms, and they descend like trashy angels from a moss-draped heaven."
+                "Saeva isn't here yet, but the Skunk Ape scampers off, leaving a trail straight toward Cypress Springs."
             )
-            print('"Got my girl, got my floaty, got my shine. Let\u2019s fuckin\u2019 go."')
-            import sys
-            sys.exit(0)
+            state.move_to("cypress_springs")
         else:
             print(
                 "The Skunk Ape roars and beats his chest with swamp-soaked confidence."
@@ -566,6 +564,73 @@ def create_scenes():
         {
             "fight": fight_skunk_ape,
             "look around": look_around_cypress,
+            "inventory": show_inventory,
+        },
+    )
+
+    cypress_springs_desc = (
+        "Travis steps to the edge of Cypress Springs, the water glistening under the moon. "
+        "A bloated shadow rises from the depths—a seductive, unhinged Water Bug ready to strike."
+    )
+
+    def water_bug_cutscene(state):
+        print("\nSaeva Venia bursts from the treeline. \"Don’t touch my man, BITCH!\"")
+        print("With a devastating judo kick, she yeets the Water Bug into the woods.")
+        print("The Skunk Ape lumbers out, catching the bug mid-air before disappearing into the swamp.")
+        print("The skies clear and the cicadas sing. Travis is stunned.")
+        print("\nTravis and Saeva spark up doobies from their Gatorade Bong.")
+        print("Floating down the river on the Rubber Duck Floaty, they snack on gas station goodies.")
+        print('Saeva whispers, "Took you long enough, swamp god."')
+        print("THE END – Together Forever, Memorial Day 2025")
+        import sys
+        sys.exit(0)
+
+    def water_bug_fight(state):
+        print("The Water Bug sways from the shallows, wings dripping. She eyes Travis with filthy intent.")
+        boss_hp = 4
+        travis_hp = 3
+        stats = state.flags["travis_stats"]
+        confused = 0
+        while boss_hp > 1 and travis_hp > 0:
+            if confused:
+                print("\nTravis is woozy from the Toxic Twerk! -2 to his next move.")
+            print("\nWhat's your move?")
+            print("- flex (STR)")
+            print("- flirt (CHA)")
+            print("- yeehaw (WTF)")
+            move = input("> ").strip().lower()
+            if move not in ("flex", "flirt", "yeehaw"):
+                print("Travis fumbles, unsure what that even was.")
+                continue
+            roll = random.randint(1, 20)
+            mod = stats.get(move, 0)
+            if confused:
+                mod -= 2
+                confused = 0
+            total = roll + mod
+            print(f"You rolled a {roll} + {mod} = {total}!")
+            if total >= 13:
+                print("Direct hit! Water Bug screeches, slime flying.")
+                boss_hp -= 1
+            else:
+                if random.random() < 0.5:
+                    print("She unleashes a Toxic Twerk, rattling the swamp!")
+                    confused = 1
+                else:
+                    print("She slaps Travis with a slick limb.")
+                    travis_hp -= 1
+        if travis_hp <= 0:
+            print("Travis tumbles into the spring, choking on defeat. He'll have to regroup back at the road.")
+            state.move_to("dirt_road")
+            return
+        water_bug_cutscene(state)
+
+    cypress_springs = Scene(
+        "cypress_springs",
+        cypress_springs_desc,
+        {
+            "fight": water_bug_fight,
+            "look around": lambda state: print(cypress_springs_desc),
             "inventory": show_inventory,
         },
     )
@@ -585,6 +650,7 @@ def create_scenes():
             walmart,
             walmart_after_zombies,
             cypress_throne,
+            cypress_springs,
         ]
     }
 
