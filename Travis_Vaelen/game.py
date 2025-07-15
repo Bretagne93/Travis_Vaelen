@@ -1,4 +1,5 @@
 import sys
+import os
 import random
 
 class Scene:
@@ -573,17 +574,6 @@ def create_scenes():
         "A bloated shadow rises from the depths—a seductive, unhinged Water Bug ready to strike."
     )
 
-    def water_bug_cutscene(state):
-        print("\nSaeva Venia bursts from the treeline. \"Don’t touch my man, BITCH!\"")
-        print("With a devastating judo kick, she yeets the Water Bug into the woods.")
-        print("The Skunk Ape lumbers out, catching the bug mid-air before disappearing into the swamp.")
-        print("The skies clear and the cicadas sing. Travis is stunned.")
-        print("\nTravis and Saeva spark up some doobies from their stash.")
-        print("Floating down the river on the Rubber Duck and Flamingo floaties, they snack on gas station goodies.")
-        print('Saeva whispers, "Took you long enough, swamp god."')
-        print("THE END – Together Forever, Memorial Day 2025")
-        import sys
-        sys.exit(0)
 
     def water_bug_fight(state):
         print("The Water Bug sways from the shallows, wings dripping. She eyes Travis with filthy intent.")
@@ -625,6 +615,36 @@ def create_scenes():
             return
         water_bug_cutscene(state)
 
+    ginnie_springs = Scene(
+        "ginnie_springs",
+        ginnie_springs_desc,
+        {
+            "fight": water_bug_fight,
+            "look around": lambda state: print(ginnie_springs_desc),
+            "inventory": show_inventory,
+        },
+    )
+
+    return {
+        scene.name: scene
+        for scene in [
+            trailer,
+            dirt_road,
+            gas_station,
+            gas_station_after_lizard,
+            mud_hole,
+            strip_club,
+            mole_cricket_showdown,
+            stage_backroom,
+            club_exit,
+            walmart,
+            walmart_after_zombies,
+            ginnie_throne,
+            ginnie_springs,
+        ]
+    }
+
+
 def water_bug_cutscene(state):
     print("\nSaeva Venia bursts from the treeline. \"Don’t touch my man, BITCH!\"")
     print("With a devastating judo kick, she yeets the Water Bug into the woods.")
@@ -645,45 +665,12 @@ def water_bug_cutscene(state):
     while True:
         choice = input("\nWould you like to play again? (yes/no): ").strip().lower()
         if choice in ("yes", "y"):
-            import os
-            import sys
-            os.execv(sys.executable, ['python'] + sys.argv)  # Restart
+            os.execv(sys.executable, [sys.executable] + sys.argv)
         elif choice in ("no", "n"):
             print("Later, gator. May the river always carry you home.")
-            import sys
             sys.exit(0)
         else:
             print("Didn’t catch that, swamp cowboy. Type 'yes' or 'no'.")
-
-
-ginnie_springs = Scene(
-    "ginnie_springs",
-    ginnie_springs_desc,
-    {
-        "fight": water_bug_fight,
-        "look around": lambda state: print(ginnie_springs_desc),
-        "inventory": show_inventory,
-    },
-)
-def create_scenes():
-    return {
-        scene.name: scene
-        for scene in [
-            trailer,
-            dirt_road,
-            gas_station,
-            gas_station_after_lizard,
-            mud_hole,
-            strip_club,
-            mole_cricket_showdown,
-            stage_backroom,
-            club_exit,
-            walmart,
-            walmart_after_zombies,
-            ginnie_throne,
-            ginnie_springs,
-        ]
-    }
 
 
 def main():
