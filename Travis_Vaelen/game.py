@@ -114,11 +114,10 @@ def create_scenes():
                 "and a half-smoked joint in a butter dish labeled 'emergency.'"
             ),
             "read note": lambda state: print(
-            "The note is written in lipstick on crumpled receipt paper. It reads:\n\n"
-            "\"Memorial Day. Ginnie Springs. Bring the ducky float, the shine, and that sinful tongue. I’ll be waiting.\"\n\n"
-            "- Saeva (kiss mark)"
-    ),
-
+                "The note is written in lipstick on crumpled receipt paper. It reads:\n\n"
+                '\"Memorial Day. Ginnie Springs. Bring the ducky float, the shine, and that sinful tongue. I\u2019ll be waiting.\"\n\n'
+                "- Saeva \ud83d\udc8b"
+            ),
             "look in mirror": look_in_mirror,
             "inventory": show_inventory,
         },
@@ -245,87 +244,140 @@ def create_scenes():
     )
 
     def mud_hole_enter(state):
-      if not state.flags.get("visited_mud_hole"):
+        if not state.flags.get("visited_mud_hole"):
+            print(
+                "Travis steps into the Mud Hole—a sun-scorched pit of beer cans, flip-flops, and lost dignity.\n"
+                "The air is thick with weed smoke and gnat swarms. A busted boombox plays Kid Rock on loop, its battery held in with duct tape."
+            )
+            state.flags["visited_mud_hole"] = True
+
+
+    def mole_cricket_fight(state):
         print(
-            "Travis steps into the Mud Hole—a sun-scorched pit of beer cans, flip-flops, and lost dignity.\n"
-            "The air is thick with weed smoke and gnat swarms. A busted boombox plays Kid Rock on loop, its battery held in with duct tape."
+            "Out from a camo-tarp tent crawls the Mole Cricket, her eyes bloodshot and wild.\n"
+            "She wears cut-off overalls, a bikini top, and Crocs covered in mud. A blunt the size of a kielbasa dangles from her lips."
         )
-        state.flags["visited_mud_hole"] = True
-
-
-def mole_cricket_fight(state):
-    print(
-        "Out from a camo-tarp tent crawls the Mole Cricket, her eyes bloodshot and wild.\n"
-        "She wears cut-off overalls, a bikini top, and Crocs covered in mud. A blunt the size of a kielbasa dangles from her lips."
-    )
-    print(
-        "\n\"Wanna hit this, sugar?\" she purrs, exhaling a cloud so thick it makes the cicadas cough."
-    )
-
-    stats = state.flags["travis_stats"]
-    boss_hp = 5
-    travis_hp = 3
-    bogged = False
-
-    while boss_hp > 0 and travis_hp > 0:
-        if bogged:
-            print("\nTravis is disoriented from that righteous rip and loses this turn!")
-            bogged = False
-            travis_hp -= 1
-            print("He coughs violently.\n\"Is you the police!?\" Mole Cricket shrieks.")
-        else:
-            print("\nWhat’s your move?")
-            print("- flex (STR)")
-            print("- flirt (CHA)")
-            print("- yeehaw (WTF)")
-            move = input("> ").strip().lower()
-
-            if move not in ("flex", "flirt", "yeehaw"):
-                print("Travis hesitates. The Mole Cricket narrows her eyes. That ain't no move.")
-                continue
-
-            roll = random.randint(1, 20)
-            mod = stats.get(move, 0)
-            total = roll + mod
-
-            print(f"You rolled a {roll} + {mod} = {total}!")
-
-            if total >= 14:
-                print("Boom! Mole Cricket stumbles backward into a kiddie pool full of Natty Light cans.")
-                boss_hp -= 1
-            elif total >= 8:
-                print("You land a glancing blow, but she shrugs it off with a giggle and another rip.")
-            else:
-                print("She exhales a monstrous bong rip right into your face. You've been BOGGED!")
-                bogged = True
-
-    if boss_hp <= 0:
         print(
-            "\nWith a dramatic flop, she falls onto a deflated pool float.")
-        print("\"Alright alright, you earned it...\" she wheezes, tossing Travis a crusty Crown Royal bag.")
-        print("Inside: the *Bag of Doobies*.")
-        state.inventory.append("Bag of Doobies")
+            "\n\"Wanna hit this, sugar?\" she purrs, exhaling a cloud so thick it makes the cicadas cough."
+        )
+
+        stats = state.flags["travis_stats"]
+        boss_hp = 5
+        travis_hp = 3
+        bogged = False
+
+        while boss_hp > 0 and travis_hp > 0:
+            if bogged:
+                print("\nTravis is disoriented from that righteous rip and loses this turn!")
+                bogged = False
+                travis_hp -= 1
+                print("He coughs violently.\n\"Is you the police!?\" Mole Cricket shrieks.")
+            else:
+                print("\nWhat’s your move?")
+                print("- flex (STR)")
+                print("- flirt (CHA)")
+                print("- yeehaw (WTF)")
+                move = input("> ").strip().lower()
+
+                if move not in ("flex", "flirt", "yeehaw"):
+                    print("Travis hesitates. The Mole Cricket narrows her eyes. That ain't no move.")
+                    continue
+
+                roll = random.randint(1, 20)
+                mod = stats.get(move, 0)
+                total = roll + mod
+
+                print(f"You rolled a {roll} + {mod} = {total}!")
+
+                if total >= 14:
+                    print("Boom! Mole Cricket stumbles backward into a kiddie pool full of Natty Light cans.")
+                    boss_hp -= 1
+                elif total >= 8:
+                    print("You land a glancing blow, but she shrugs it off with a giggle and another rip.")
+                else:
+                    print("She exhales a monstrous bong rip right into your face. You've been BOGGED!")
+                    bogged = True
+
+        if boss_hp <= 0:
+            print(
+                "\nWith a dramatic flop, she falls onto a deflated pool float."
+            )
+            print("\"Alright alright, you earned it...\" she wheezes, tossing Travis a crusty Crown Royal bag.")
+            print("Inside: the *Bag of Doobies*.")
+            state.inventory.append("Bag of Doobies")
+            state.flags["beat_mole_cricket"] = True
+            state.move_to("town")
+        else:
+            print("\nTravis stumbles away, hacking and humiliated. He'll need to come back stronger.")
+            state.move_to("dirt_road")
+
+
+    mud_hole = Scene(
+        "mud_hole",
+        (
+            "A wretched swamp-side gathering of lawn chairs, broken coolers, and permanent regret.\n"
+            "You hear hacking coughs and the sound of someone trying to light a wet joint."
+        ),
+        {
+            "approach tent": lambda state: mole_cricket_fight(state),
+            "inventory": lambda state: print("Inventory: " + ', '.join(state.inventory)),
+            "leave": "dirt_road",
+        },
+        on_enter=mud_hole_enter,
+    )
+
+    def mole_cricket_enter(state):
+        print(
+            "The lights dim and a shadow slinks from the fog machine. Mole Cricket steps into view\u2014mud-slicked thighs, rhinestone flip-flops, daisy dukes from 2008, a bikini top made of fishing net, and a vape cloud that smells like watermelon and shame."
+        )
+        rounds = 0
+        while rounds < 3:
+            choice = input("Your move? ").strip().lower()
+            if choice in ("flex lat spread", "quote saeva"):
+                rounds += 1
+            elif choice == "offer jerky":
+                rounds += 1
+            elif choice in ("run", "say 'who\u2019s dale?'", "say 'who's dale?'", "bite lip"):
+                if "Bag of gator jerky" in state.inventory:
+                    state.inventory.remove("Bag of gator jerky")
+                print("Travis moans her name in his sleep now. Saeva\u2019s gonna be pissed.")
+                state.move_to("mole_cricket_showdown")
+                return
+            else:
+                if "Bag of gator jerky" in state.inventory:
+                    state.inventory.remove("Bag of gator jerky")
+                print("Travis moans her name in his sleep now. Saeva\u2019s gonna be pissed.")
+                state.move_to("mole_cricket_showdown")
+                return
+
+        print("Mole Cricket snarls: 'You ain\u2019t even worth suckin\u2019 the soul out of.'")
+        state.inventory.append("Blood-Slicked Lip Gloss")
         state.flags["beat_mole_cricket"] = True
-        state.move_to("town")  # Next scene
-    else:
-        print("\nTravis stumbles away, hacking and humiliated. He'll need to come back stronger.")
-        state.move_to("dirt_road")
+        state.move_to("stage_backroom")
 
+    def attempt_stage(state):
+        if not state.flags.get("beat_mole_cricket"):
+            return "mole_cricket_showdown"
+        return "stage_backroom"
 
-mud_hole = Scene(
-    "mud_hole",
-    (
-        "A wretched swamp-side gathering of lawn chairs, broken coolers, and permanent regret.\n"
-        "You hear hacking coughs and the sound of someone trying to light a wet joint."
-    ),
-    {
-        "approach tent": lambda state: mole_cricket_fight(state),
-        "inventory": lambda state: print("Inventory: " + ", ".join(state.inventory)),
-        "leave": "dirt_road",
-    },
-    on_enter=mud_hole_enter,
-)
+    strip_club = Scene(
+        "strip_club",
+        (
+            "Neon signs flicker above sticky floors while the bass rattles Travis's ribs. Half-interested dancers twirl as the crowd hollers."
+        ),
+        {
+            "approach stage": attempt_stage,
+            "leave": "dirt_road",
+            "inventory": show_inventory,
+        },
+    )
 
+    mole_cricket_showdown = Scene(
+        "mole_cricket_showdown",
+        "Mole Cricket blocks the path to the stage, eyes glittering with menace.",
+        {},
+        on_enter=mole_cricket_enter,
+    )
 
     def stage_backroom_intro(state):
         print(
@@ -424,6 +476,7 @@ mud_hole = Scene(
             dirt_road,
             gas_station,
             gas_station_after_lizard,
+            mud_hole,
             strip_club,
             mole_cricket_showdown,
             stage_backroom,
