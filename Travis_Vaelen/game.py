@@ -238,9 +238,110 @@ def create_scenes():
         ),
         {
             "talk to cashier": talk_cashier,
+            "go to walmart": "walmart",
             "leave": "dirt_road",
             "inventory": show_inventory,
         },
+    )
+
+    def walmart_enter(state):
+        if not state.flags.get("beat_meth_zombies"):
+            print(
+                "The parking lot is cracked and steaming. Weed smoke and meth vapor hang in the air like chemical fog."
+            )
+            print(
+                "Discarded carts roll on their own. The entrance is barricaded with pallets."
+            )
+            print('Travis adjusts his Pit Vipers. "Time to chomp or be chomped."')
+            print('A zombified greeter shuffles up: "Welcome to Hellmart. No returns. No mercy."')
+        else:
+            print(
+                "The lot is littered with twitching corpses. A ranger waits by the opened barricade, tipping his hat."
+            )
+
+    def meth_zombie_fight(state):
+        stats = state.flags["travis_stats"]
+        travis_hp = 3
+        for wave in range(1, 4):
+            zombie_hp = 2
+            print(f"\nWave {wave}! A meth zombie lurches from the smoke.")
+            while zombie_hp > 0 and travis_hp > 0:
+                print("\nWhat's your move?")
+                print("- flex (STR)")
+                print("- flirt (CHA)")
+                print("- yeehaw (WTF)")
+                move = input("> ").strip().lower()
+
+                if move not in ("flex", "flirt", "yeehaw"):
+                    print("Travis just stares through the haze. That ain't a move.")
+                    continue
+
+                roll = random.randint(1, 20)
+                mod = stats.get(move, 0)
+                total = roll + mod
+
+                print(f"You rolled a {roll} + {mod} = {total}!")
+
+                if total >= 12:
+                    print(
+                        random.choice(
+                            [
+                                "Zombie staggers back, dropping a half-smoked Marlboro.",
+                                "You knock the fiend into a cart return with a wet crunch.",
+                                "It screeches and reels, smacking into a broken Prius.",
+                            ]
+                        )
+                    )
+                    zombie_hp -= 1
+                else:
+                    print(
+                        random.choice(
+                            [
+                                "Y'ain't got no teeth, you ain't got no power!",
+                                "Where's ma baby?! Where's MA BABY?!",
+                                "Y'all ever smoked a TV remote?",
+                            ]
+                        )
+                    )
+                    travis_hp -= 1
+
+            if travis_hp <= 0:
+                print("\nTravis collapses under a pile of twitching bodies and crawls back to the road.")
+                state.move_to("dirt_road")
+                return
+            else:
+                print("The zombie crumples to the asphalt.")
+
+        print("\nAll three zombies lie motionless.")
+        print("Inside the store, Travis finds a Rubber duck floaty and a makeshift Gatorade Bong.")
+        state.inventory.append("Rubber duck floaty")
+        state.inventory.append("Gatorade Bong")
+        print("Travis does the Gator Chomp to celebrate.")
+        print('A park ranger approaches: "You that boy what saved them folks durin\u2019 Hurricane Andrew. Go on. Ginnie\'s waitin\'."')
+        state.flags["beat_meth_zombies"] = True
+        state.move_to("walmart_after_zombies")
+
+    walmart = Scene(
+        "walmart",
+        "A smoking Walmart parking lot full of rolling carts and chaos.",
+        {
+            "fight zombies": meth_zombie_fight,
+            "leave": "dirt_road",
+            "inventory": show_inventory,
+        },
+        on_enter=walmart_enter,
+    )
+
+    walmart_after_zombies = Scene(
+        "walmart_after_zombies",
+        "The barricade is open and the ranger waits to guide you toward the springs.",
+        {
+            "go to springs": "cypress_throne",
+            "head to ginnie": "cypress_throne",
+            "inventory": show_inventory,
+            "leave": "dirt_road",
+        },
+        on_enter=walmart_enter,
     )
 
     def mud_hole_enter(state):
@@ -481,6 +582,8 @@ def create_scenes():
             mole_cricket_showdown,
             stage_backroom,
             club_exit,
+            walmart,
+            walmart_after_zombies,
             cypress_throne,
         ]
     }
