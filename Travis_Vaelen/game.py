@@ -209,9 +209,10 @@ def create_scenes():
             "Bubba tells Travis he can get the lighter, but only if Travis plays “Possum Kingdom” by the Toadies with the band."
         )
         lyrics = [
-            "DO YOU WANNA DIE?",
-            "MAKE UP YOUR MIND",
-            "DO YOU WANNA HOLD HER?",
+            "I'm not gonna lie",
+            "I'll not be a gentleman",
+            "Behind the boathouse",
+            "I'll show you my dark secret"
         ]
         for line in lyrics:
             reply = input(f"{line} ").strip().upper()
