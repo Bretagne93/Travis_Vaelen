@@ -58,6 +58,15 @@ def create_scenes():
             state.flags["saw_gator"] = True
             state.flags["tooth_on_ground"] = True
 
+    def check_truck(state):
+        print(
+            "Travis slaps the hood of his red Toyota, chipped paint gleaming in the sun.\n"
+            "\"Shoot! Truck's outta gas… Better go get some.\"\n"
+            "He scratches his jaw, thinks for a beat, then grins.\n"
+            "\"I'll grab some jerky for Saeva too. Girl gets real ornery without her protein.\""
+        )
+        state.flags["checked_truck"] = True
+
     def pick_up_tooth(state):
         if state.flags.get("tooth_on_ground"):
             print(
@@ -111,15 +120,20 @@ def create_scenes():
     dirt_road = Scene(
         "dirt_road",
         (
-            "The road outside is nothing but sun-baked mud leading back toward "
-            "civilization. The air tastes like fried humidity."
+            "The road outside is nothing but sun-baked mud leading back toward civilization. "
+            "Mosquitoes buzz like chainsaws in the air. Travis’s truck squats in the driveway, thirsty."
         ),
         {
             "go back": "trailer",
             "return": "trailer",
             "pick up tooth": pick_up_tooth,
             "inventory": show_inventory,
-            "go to gas station": "gas_station",
+            "check truck": check_truck,
+            "go to gas station": lambda state: (
+                "gas_station" if state.flags.get("checked_truck") else print(
+                    "Travis ain't about to walk off before checking the truck. Man’s got priorities."
+                )
+            ),
         },
         on_enter=dirt_road_enter,
     )
