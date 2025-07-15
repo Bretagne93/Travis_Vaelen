@@ -646,7 +646,8 @@ def water_bug_cutscene(state):
         choice = input("\nWould you like to play again? (yes/no): ").strip().lower()
         if choice in ("yes", "y"):
             import os
-            os.execv(__file__, ['python'] + sys.argv)  # Restart the script
+            import sys
+            os.execv(sys.executable, ['python'] + sys.argv)  # Restart
         elif choice in ("no", "n"):
             print("Later, gator. May the river always carry you home.")
             import sys
@@ -655,16 +656,16 @@ def water_bug_cutscene(state):
             print("Didn’t catch that, swamp cowboy. Type 'yes' or 'no'.")
 
 
-    ginnie_springs = Scene(
-        "ginnie_springs",
-        ginnie_springs_desc,
-        {
-            "fight": water_bug_fight,
-            "look around": lambda state: print(ginnie_springs_desc),
-            "inventory": show_inventory,
-        },
-    )
-
+ginnie_springs = Scene(
+    "ginnie_springs",
+    ginnie_springs_desc,
+    {
+        "fight": water_bug_fight,
+        "look around": lambda state: print(ginnie_springs_desc),
+        "inventory": show_inventory,
+    },
+)
+def create_scenes():
     return {
         scene.name: scene
         for scene in [
