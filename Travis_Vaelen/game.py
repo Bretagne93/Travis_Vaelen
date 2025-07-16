@@ -118,7 +118,7 @@ def create_scenes():
             "read note": lambda state: print(
     "The note is written in eyeliner on a crumpled Taco Bell napkin. It reads:\n\n"
     "\"Memorial Day. Ginnie Springs. Bring the ducky float, the doobies, and that sinful tongue. I’ll be waiting.\"\n\n"
-    "- Saeva 💋"
+    "- Saeva"
 ),
 
             "look in mirror": look_in_mirror,
