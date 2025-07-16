@@ -236,8 +236,8 @@ def create_scenes():
         "gas_station_after_lizard",
         (
             "The gas station is quiet now. The cashier peeks over the counter, impressed.\n"
-            '"Shortcut to Ginnie? Dirt trail past the old bait shop. Only Malus ever drove it faster."\n'
-            "You feel his gaze in the gator jerky aisle."
+            '"Shortcut to Ginnie? Dirt trail past the old bait shop. Only a fool or a god takes it this close to sundown."\n'
+            "The cashier leans in, whispering, 'Mud don’t boil like that unless something’s breathin’ beneath it.'"
         ),
         {
             "talk to cashier": talk_cashier,
@@ -257,6 +257,9 @@ def create_scenes():
             )
             print('Travis adjusts his Pit Vipers. "Time to chomp or be chomped."')
             print('A zombified greeter shuffles up: "Welcome to Hellmart. No returns. No mercy."')
+            print("A crusty book wrapped in duct tape and Marlboro points lies beside a scorched grill display.")
+            print('Its cover reads: "The RED-Neckronomicon – Speak not the rites of Busch Light."')
+
         else:
             print(
                 "The lot is littered with twitching corpses. A ranger waits by the opened barricade, tipping his hat."
@@ -268,6 +271,7 @@ def create_scenes():
         for wave in range(1, 4):
             zombie_hp = 2
             print(f"\nWave {wave}! A meth zombie lurches from the smoke.")
+
             while zombie_hp > 0 and travis_hp > 0:
                 print("\nWhat's your move?")
                 print("- flex (STR)")
@@ -316,6 +320,10 @@ def create_scenes():
                 print("The zombie crumples to the asphalt.")
 
         print("\nAll three zombies lie motionless.")
+        print("From under a collapsed zombie, Travis pulls the RED-Neckronomicon.")
+        print("The cursed book whispers truck specs and possum recipes in ancient tongues.")
+        state.inventory.append("RED-Neckronomicon")
+
         print("Inside the store, Travis finds a Rubber duck floaty and a cheetah print fanny pack.")
         state.inventory.append("Rubber duck floaty")
         state.inventory.append("Cheetah print fanny pack")
