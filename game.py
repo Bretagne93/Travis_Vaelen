@@ -238,7 +238,7 @@ def create_scenes():
         ),
         {
             "talk to cashier": talk_cashier,
-            "go to walmart": "walmart",
+            "go to mud hole": "mud_hole",
             "leave": "dirt_road",
             "inventory": show_inventory,
         },
@@ -246,22 +246,24 @@ def create_scenes():
 
     def walmart_enter(state):
         if not state.flags.get("beat_meth_zombies"):
+            print("Travis slips through the sliding doors and heads straight for the Halloween aisle.")
             print(
-                "The parking lot is cracked and steaming. Weed smoke and meth vapor hang in the air like chemical fog."
+                "Wedged between plastic pumpkins sits the RED-Neckronomicon, bound in denim and reeking of Axe body spray."
             )
-            print(
-                "Discarded carts roll on their own. The entrance is barricaded with pallets."
-            )
-            print('Travis adjusts his Pit Vipers. "Time to chomp or be chomped."')
-            print('A zombified greeter shuffles up: "Welcome to Hellmart. No returns. No mercy."')
+            print("When he cracks it open, an unholy banjo chord summons meth zombies from every checkout lane.")
         else:
             print(
-                "The lot is littered with twitching corpses. A ranger waits by the opened barricade, tipping his hat."
+                "Stacks of corpses block the clearance racks. A ranger nods respectfully by the exit."
             )
 
     def meth_zombie_fight(state):
         stats = state.flags["travis_stats"]
         travis_hp = 3
+        florida_man_lines = [
+            "Florida Man wrestles gator for beer money!",
+            "Florida Man drives lawnmower to courthouse on dare!",
+            "Florida Man robs Wendy's with live iguana!",
+        ]
         for wave in range(1, 4):
             zombie_hp = 2
             print(f"\nWave {wave}! A meth zombie lurches from the smoke.")
@@ -275,6 +277,8 @@ def create_scenes():
                 if move not in ("flex", "flirt", "yeehaw"):
                     print("Travis just stares through the haze. That ain't a move.")
                     continue
+                if move == "yeehaw":
+                    print(random.choice(florida_man_lines))
 
                 roll = random.randint(1, 20)
                 mod = stats.get(move, 0)
@@ -286,9 +290,9 @@ def create_scenes():
                     print(
                         random.choice(
                             [
-                                "Zombie staggers back, dropping a half-smoked Marlboro.",
-                                "You knock the fiend into a cart return with a wet crunch.",
-                                "It screeches and reels, smacking into a broken Prius.",
+                                "Zombie slips on a puddle of nacho cheese and faceplants.",
+                                "Your strike sends it tumbling into the clearance DVDs.",
+                                "The undead cashier explodes in a shower of cheap cologne.",
                             ]
                         )
                     )
@@ -297,9 +301,9 @@ def create_scenes():
                     print(
                         random.choice(
                             [
-                                "Y'ain't got no teeth, you ain't got no power!",
-                                "Where's ma baby?! Where's MA BABY?!",
-                                "Y'all ever smoked a TV remote?",
+                                "Zombie chomps back, breath reeking of expired Mountain Dew.",
+                                "It screeches, 'Cleanup on aisle YOU,' and slashes wildly.",
+                                "The fiend spits a tooth and cackles about rollbacks.",
                             ]
                         )
                     )
@@ -313,9 +317,12 @@ def create_scenes():
                 print("The zombie crumples to the asphalt.")
 
         print("\nAll three zombies lie motionless.")
-        print("Inside the store, Travis finds a Rubber duck floaty and a makeshift Gatorade Bong.")
+        print(
+            "Among the scattered limbs Travis grabs a rubber duck floaty, a cheetah-print fanny pack, and a coupon for Slim Jims."
+        )
         state.inventory.append("Rubber duck floaty")
-        state.inventory.append("Gatorade Bong")
+        state.inventory.append("Cheetah-print fanny pack")
+        state.inventory.append("Slim Jim coupon")
         print("Travis does the Gator Chomp to celebrate.")
         print('A park ranger approaches: "You that boy what saved them folks durin\u2019 Hurricane Andrew. Go on. Ginnie\'s waitin\'."')
         state.flags["beat_meth_zombies"] = True
@@ -334,14 +341,23 @@ def create_scenes():
 
     walmart_after_zombies = Scene(
         "walmart_after_zombies",
-        "The barricade is open and the ranger waits to guide you toward the springs.",
+        "The ranger tips his hat, impressed by the carnage. It's time to hit the road before the sirens roll in.",
         {
-            "go to springs": "cypress_springs",
-            "head to ginnie": "cypress_springs",
+            "go to springs": "cop_chase",
+            "head to ginnie": "cop_chase",
             "inventory": show_inventory,
             "leave": "dirt_road",
         },
         on_enter=walmart_enter,
+    )
+
+    cop_chase = Scene(
+        "cop_chase",
+        "Blue lights flash in the rearview as Travis floors it. (Scene pending.)",
+        {
+            "keep running": "strip_club",
+            "inventory": show_inventory,
+        },
     )
 
     def mud_hole_enter(state):
@@ -407,7 +423,7 @@ def create_scenes():
             print("Inside: the *Bag of Doobies*.")
             state.inventory.append("Bag of Doobies")
             state.flags["beat_mole_cricket"] = True
-            state.move_to("town")
+            state.move_to("walmart")
         else:
             print("\nTravis stumbles away, hacking and humiliated. He'll need to come back stronger.")
             state.move_to("dirt_road")
@@ -522,19 +538,19 @@ def create_scenes():
         {
             "leave": "dirt_road",
             "inventory": show_inventory,
-            "go to cypress springs": "cypress_springs",
+            "go to ginnie springs": "ginnie_springs",
         },
     )
 
-    cypress_throne_desc = (
+    ginnie_throne_desc = (
         "Travis reaches the base of a massive cypress tree draped in Spanish moss. "
         "Saeva Venia is trapped at the top, held hostage by a stinking, muscular cryptid: the Skunk Ape.\n"
         "The air reeks of sweat, cologne, and Mountain Dew.\n"
         "The Skunk Ape grunts and shows off his \"swamp bride\" to the frogs."
     )
 
-    def look_around_cypress(state):
-        print(cypress_throne_desc)
+    def look_around_ginnie(state):
+        print(ginnie_throne_desc)
 
     def fight_skunk_ape(state):
         has_lighter = any("Zippo lighter" in item for item in state.inventory)
@@ -551,24 +567,24 @@ def create_scenes():
             print(
                 "Saeva isn't here yet, but the Skunk Ape scampers off, leaving a trail straight toward Cypress Springs."
             )
-            state.move_to("cypress_springs")
+            state.move_to("ginnie_springs")
         else:
             print(
                 "The Skunk Ape roars and beats his chest with swamp-soaked confidence."
             )
             print("You ain\u2019t ready for this fight, son.")
 
-    cypress_throne = Scene(
-        "cypress_throne",
-        cypress_throne_desc,
+    ginnie_throne = Scene(
+        "ginnie_throne",
+        ginnie_throne_desc,
         {
             "fight": fight_skunk_ape,
-            "look around": look_around_cypress,
+            "look around": look_around_ginnie,
             "inventory": show_inventory,
         },
     )
 
-    cypress_springs_desc = (
+    ginnie_springs_desc = (
         "Bass rattles the trees as Travis wades into Cypress Springs. Neon lights flicker off the water "
         "and clouds of vape mist swirl across the surface. "
         "A glitter-soaked shape rises from the depths—a deranged Water Bug part stripper, part toxic ex, "
@@ -584,7 +600,7 @@ def create_scenes():
             "A huge hairy arm bursts from the brush\u2014Skunk Ape catches her mid-air and vanishes into the trees with his new bride."
         )
         print("Travis lights a doobie with Saeva as they recline on the Rubber Duck Floaty.")
-        print("They pass the Gatorade Bong back and forth.")
+        print("She stuffs the fanny pack with Slim Jims for the ride home.")
         print('"Took you long enough, swamp god," she murmurs, licking salt off his neck.')
         print("The spring water sparkles. The cicadas scream. All is right in Florida.")
         print("\n--- THE END ---\n")
@@ -593,7 +609,7 @@ def create_scenes():
         sys.exit(0)
 
     def water_bug_fight(state):
-        required = ["Rubber duck floaty", "Gatorade Bong", "Cooler of Snacks"]
+        required = ["Rubber duck floaty", "Cheetah-print fanny pack", "Slim Jim coupon"]
         if not all(item in state.inventory for item in required):
             print("Travis ain't properly kitted out for this throwdown. Best gather more gear.")
             state.move_to("dirt_road")
@@ -639,12 +655,12 @@ def create_scenes():
             return
         water_bug_cutscene(state)
 
-    cypress_springs = Scene(
-        "cypress_springs",
-        cypress_springs_desc,
+    ginnie_springs = Scene(
+        "ginnie_springs",
+        ginnie_springs_desc,
         {
             "fight": water_bug_fight,
-            "look around": lambda state: print(cypress_springs_desc),
+            "look around": lambda state: print(ginnie_springs_desc),
             "inventory": show_inventory,
         },
     )
@@ -657,14 +673,15 @@ def create_scenes():
             gas_station,
             gas_station_after_lizard,
             mud_hole,
+            walmart,
+            walmart_after_zombies,
+            cop_chase,
             strip_club,
             mole_cricket_showdown,
             stage_backroom,
             club_exit,
-            walmart,
-            walmart_after_zombies,
-            cypress_throne,
-            cypress_springs,
+            ginnie_throne,
+            ginnie_springs,
         ]
     }
 
