@@ -88,35 +88,35 @@ def create_scenes():
         print("A golden mullet, gleaming like sunrise on the Suwannee")
         print("Pit Viper sunglasses and a mustache sharp enough to slice jerky")
         print(
-            "A flamingo tattoo on his right bicep with the words \u201cSaeva Venia\u201d inked beneath it"
+            "A flamingo tattoo on his left bicep with the words \u201cSaeva Venia\u201d inked beneath it"
         )
-        print("A lat spread so glorious, it was carved by ancient fanboat spirits")
+        print("A lat spread so glorious, Macho Man sheds a single tear in Valhalla and whispers, 'Ohhh yeahhh.'")
 
     trailer = Scene(
         "trailer",
         (
             "Travis jolts awake in his sacred single-wide, air thick with mosquito fog and last night\u2019s regret. "
             "The walls are paper-thin, adorned with gator jawbones, fan-blown NASCAR posters, and a deer skull "
-            "wearing a camo trucker hat that reads 'Born to Mullet.'\n\n"
-            "The floor creaks under his boots as he steps past a tipped-over beer can pyramid and an ancient rug "
-            "stained with pork grease and maybe something unholy. A shrine of empty Slim Jim wrappers rests beneath "
+            "wearing a camo trucker hat that reads 'Freedom Ain't Free.'\n\n"
+            "The floor creaks under his boots as he steps past a tipped-over beer can pyramid and the Dude's rug "
+            "stained with bong water and maybe something unholy. A shrine of jars filled with sharks teeth rests beneath "
             "a faded Polaroid of him and Saeva\u2014her lipstick smudged on his cheek, his eyes full of feral devotion.\n\n"
             "A folded note lies on the counter, held down by a bottle of hot sauce and a shell casing.\n\n"
             "Outside, the swamp buzzes like a live wire. Travis\u2019s Toyota glows red in the morning sun, jacked and ready, "
             "but almost outta gas.\n\n"
-            "Somewhere in the ether, his cousin Malus growls with pride.\n"
+            "A gator sunbathes on the bank, eyeing him like a potential snack."
         ),
         {
             "step outside": "dirt_road",
             "leave": "dirt_road",
             "look in fridge": lambda state: print(
-                "The fridge hums like a dying possum. Inside: 2 hot dogs, 1 open Bud Heavy, a jar of expired pickled okra, "
-                "and a half-smoked joint in a butter dish labeled 'emergency.'"
+                "The fridge hums like a dying possum. Inside: 2 hot dogs, 1 bottle of Bud, a jar of pickled eggs, "
+                "and an enormous joint in a butter dish labeled 'emergency.'"
             ),
             "read note": lambda state: print(
-                "The note is written in lipstick on crumpled receipt paper. It reads:\n\n"
-                '\"Memorial Day. Ginnie Springs. Bring the ducky float, the shine, and that sinful tongue. I\u2019ll be waiting.\"\n\n'
-                "- Saeva \ud83d\udc8b"
+                "The note is written in eyeliner on a crumpled Taco Bell napkin. It reads:\n\n"
+                "\"Memorial Day. Ginnie Springs. Bring the ducky float, the doobies, and that sinful tongue. I’ll be waiting.\"\n\n"
+                "- Saeva"
             ),
             "look in mirror": look_in_mirror,
             "inventory": show_inventory,
@@ -126,7 +126,7 @@ def create_scenes():
     dirt_road = Scene(
         "dirt_road",
         (
-            "The road outside is nothing but sun-baked mud leading back toward civilization. "
+            "The road outside is nothing but sun-baked mud and palmettos leading back toward civilization. "
             "Mosquitoes buzz like chainsaws in the air. Travis’s truck squats in the driveway, thirsty."
         ),
         {
@@ -149,13 +149,13 @@ def create_scenes():
             print(
                 "Travis pushes open the smeared glass door of the Fill-'Er-Up. The "
                 "air reeks of burnt coffee and diesel fumes. Behind the counter, a "
-                "gap-toothed fella hawks lotto tickets and gator jerky with a grin."
+                "gap-toothed fella stacks cigarettes and blunts with a grin."
             )
             state.flags["visited_gas_station"] = True
 
     def buy_jerky(state):
-        print("Travis tosses a few crumpled bills on the counter for some Slim Jims.")
-        state.inventory.append("Slim Jims")
+        print("Travis tosses a few crumpled bills on the counter for some Moon Pies.")
+        state.inventory.append("Moon Pies")
 
     def talk_cashier(state):
         if not state.flags.get("heard_shortcut"):
@@ -233,8 +233,8 @@ def create_scenes():
         "gas_station_after_lizard",
         (
             "The gas station is quiet now. The cashier peeks over the counter, impressed.\n"
-            '"Shortcut to Ginnie? Dirt trail past the old bait shop. Only Malus ever drove it faster."\n'
-            "You feel his gaze in the gator jerky aisle."
+            '"Shortcut to Ginnie? Dirt trail past the old bait shop. Only a fool or a god takes it this close to sundown."\n'
+            "The cashier leans in, whispering, 'Mud don’t boil like that unless something’s breathin’ beneath it.'"
         ),
         {
             "talk to cashier": talk_cashier,
@@ -301,7 +301,7 @@ def create_scenes():
                     print(
                         random.choice(
                             [
-                                "Zombie chomps back, breath reeking of expired Mountain Dew.",
+                                "Zombie chomps back, breath reeking of Baja Blast.",
                                 "It screeches, 'Cleanup on aisle YOU,' and slashes wildly.",
                                 "The fiend spits a tooth and cackles about rollbacks.",
                             ]
@@ -318,11 +318,11 @@ def create_scenes():
 
         print("\nAll three zombies lie motionless.")
         print(
-            "Among the scattered limbs Travis grabs a rubber duck floaty, a cheetah-print fanny pack, and a coupon for Slim Jims."
+            "Among the scattered limbs Travis grabs a rubber duck floaty, a cheetah-print fanny pack, and a coupon for Moon Pies."
         )
         state.inventory.append("Rubber duck floaty")
         state.inventory.append("Cheetah-print fanny pack")
-        state.inventory.append("Slim Jim coupon")
+        state.inventory.append("Moon Pie coupon")
         print("Travis does the Gator Chomp to celebrate.")
         print('A park ranger approaches: "You that boy what saved them folks durin\u2019 Hurricane Andrew. Go on. Ginnie\'s waitin\'."')
         state.flags["beat_meth_zombies"] = True
@@ -364,14 +364,13 @@ def create_scenes():
         if not state.flags.get("visited_mud_hole"):
             print(
                 "Travis steps into the Mud Hole—a sun-scorched pit of beer cans, flip-flops, and lost dignity.\n"
-                "The air is thick with weed smoke and gnat swarms. A busted boombox plays Kid Rock on loop, its battery held in with duct tape."
+                "The air is thick with humidity and gnat swarms. A busted boombox plays Kid Rock on loop, its battery held in with duct tape."
             )
             state.flags["visited_mud_hole"] = True
 
-
-    def mole_cricket_fight(state):
+def mole_cricket_fight(state):
         print(
-            "Out from a camo-tarp tent crawls the Mole Cricket, her eyes bloodshot and wild.\n"
+            "Out from the passenger seat of a jacked up truck crawls the Mole Cricket, her eyes bloodshot and wild.\n"
             "She wears cut-off overalls, a bikini top, and Crocs covered in mud. A blunt the size of a kielbasa dangles from her lips."
         )
         print(
@@ -423,104 +422,71 @@ def create_scenes():
             print("Inside: the *Bag of Doobies*.")
             state.inventory.append("Bag of Doobies")
             state.flags["beat_mole_cricket"] = True
-            state.move_to("walmart")
+            state.move_to("town")
         else:
             print("\nTravis stumbles away, hacking and humiliated. He'll need to come back stronger.")
             state.move_to("dirt_road")
 
+print(
+    "Travis grabs the Bag of Doobies and hears tires screech in the distance. "
+    "A voice echoes from a megaphone:\n\n"
+    "\"TRAVIS VAELEN, STEP AWAY FROM THE STASH AND PUT YOUR HANDS WHERE I CAN SEE 'EM!\"\n"
+)
 
-    mud_hole = Scene(
-        "mud_hole",
-        (
-            "A wretched swamp-side gathering of lawn chairs, broken coolers, and permanent regret.\n"
-            "You hear hacking coughs and the sound of someone trying to light a wet joint."
-        ),
-        {
-            "approach tent": lambda state: mole_cricket_fight(state),
-            "inventory": lambda state: print("Inventory: " + ', '.join(state.inventory)),
-            "leave": "dirt_road",
-        },
-        on_enter=mud_hole_enter,
+print(
+    "Sheriff Clovis appears, less man than legal liability, careening through the palmettos with righteous rage. "
+    "Travis vaults a beer cooler, flips the bird, and sprints toward the Toyota.\n"
+)
+
+print(
+    "With a roar of the engine and a cloud of vape smoke, Travis hauls ass down the dirt road. "
+    "Sirens wail. A possum screams. A Bible page flies through the air.\n"
+)
+
+print(
+    "He jerks the wheel hard right, catching a ditch ramp and *airborne Yeehaws* his way outta sight.\n"
+)
+
+print(
+    "The cruiser crashes into a port-a-john. Blue goo sprays everywhere.\n"
+    "Clovis emerges, dripping and furious: \"DAMN IT, VAELEN! THIS AIN'T OVER!\"\n"
+)
+
+print(
+    "Minutes later, Travis strolls into the strip club parking lot like he didn’t just reenact all of *Smokey and the Bandit*."
+)
+
+def stage_backroom_intro(state):
+    print(
+        "The backstage reeks of spilled beer, sweat, and something that might be regret. "
+        "Bubba Slim is tuning his bass, dressed in a sleeveless tee that reads ‘WAP = Whiskey And Pickles.’"
     )
-
-    def mole_cricket_enter(state):
-        print(
-            "The lights dim and a shadow slinks from the fog machine. Mole Cricket steps into view\u2014mud-slicked thighs, rhinestone flip-flops, daisy dukes from 2008, a bikini top made of fishing net, and a vape cloud that smells like watermelon and shame."
-        )
-        rounds = 0
-        while rounds < 3:
-            choice = input("Your move? ").strip().lower()
-            if choice in ("flex lat spread", "quote saeva"):
-                rounds += 1
-            elif choice == "offer jerky":
-                rounds += 1
-            elif choice in ("run", "say 'who\u2019s dale?'", "say 'who's dale?'", "bite lip"):
-                if "Bag of gator jerky" in state.inventory:
-                    state.inventory.remove("Bag of gator jerky")
-                print("Travis moans her name in his sleep now. Saeva\u2019s gonna be pissed.")
-                state.move_to("mole_cricket_showdown")
-                return
-            else:
-                if "Bag of gator jerky" in state.inventory:
-                    state.inventory.remove("Bag of gator jerky")
-                print("Travis moans her name in his sleep now. Saeva\u2019s gonna be pissed.")
-                state.move_to("mole_cricket_showdown")
-                return
-
-        print("Mole Cricket snarls: 'You ain\u2019t even worth suckin\u2019 the soul out of.'")
-        state.inventory.append("Blood-Slicked Lip Gloss")
-        state.flags["beat_mole_cricket"] = True
-        state.move_to("stage_backroom")
-
-    def attempt_stage(state):
-        if not state.flags.get("beat_mole_cricket"):
-            return "mole_cricket_showdown"
-        return "stage_backroom"
-
-    strip_club = Scene(
-        "strip_club",
-        (
-            "Neon signs flicker above sticky floors while the bass rattles Travis's ribs. Half-interested dancers twirl as the crowd hollers."
-        ),
-        {
-            "approach stage": attempt_stage,
-            "leave": "dirt_road",
-            "inventory": show_inventory,
-        },
+    print(
+        "Bubba tells Travis he can get the lighter, but only if Travis plays “Possum Kingdom” by the Toadies with the band."
     )
-
-    mole_cricket_showdown = Scene(
-        "mole_cricket_showdown",
-        "Mole Cricket blocks the path to the stage, eyes glittering with menace.",
-        {},
-        on_enter=mole_cricket_enter,
+    lyrics = [
+        "I'M NOT GUNNA LIE",
+        "I'LL NOT BE A GENTLEMAN",
+        "BEHIND THE BOATHOUSE",
+        "I'LL SHOW YOU MY DARK SECRET",
+        "MAKE UP YOUR MIND",
+        "AND I'LL PROMISE YOU",
+        "I WILL TREAT YOU WELL",
+        "MY SWEET ANGEL",
+        "SO HELP ME JESUS",
+    ]
+    for line in lyrics:
+        reply = input(f"{line} ").strip().upper()
+        if reply != line:
+            print(
+                "Travis hits a sour note. Bubba frowns like a man betrayed by his own blood."
+            )
+            return
+    print(
+        "The final chord rings out and Bubba whoops with pride, handing Travis a Zippo lighter with a naked lady on it."
     )
-
-    def stage_backroom_intro(state):
-        print(
-            "The backstage reeks of spilled beer, sweat, and something that might be regret. "
-            "Bubba Slim is tuning his bass, dressed in a sleeveless tee that reads ‘WAP = Whiskey And Pickles.’"
-        )
-        print(
-            "Bubba tells Travis he can get the lighter, but only if Travis plays “Possum Kingdom” by the Toadies with the band."
-        )
-        lyrics = [
-            "DO YOU WANNA DIE?",
-            "MAKE UP YOUR MIND",
-            "DO YOU WANNA HOLD HER?",
-        ]
-        for line in lyrics:
-            reply = input(f"{line} ").strip().upper()
-            if reply != line:
-                print(
-                    "Travis hits a sour note. Bubba frowns like a man betrayed by his own blood."
-                )
-                return
-        print(
-            "The final chord rings out and Bubba whoops with pride, handing Travis a Zippo lighter with a naked lady on it."
-        )
-        state.inventory.append("Zippo lighter with a naked lady on it")
-        state.move_to("club_exit")
+    state.inventory.append("Zippo lighter with a naked lady on it")
+    state.move_to("club_exit")
 
     stage_backroom = Scene(
         "stage_backroom",
