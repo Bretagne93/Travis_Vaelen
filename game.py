@@ -320,6 +320,7 @@ def create_scenes():
         print(
             "Among the scattered limbs Travis grabs a rubber duck floaty, a cheetah-print fanny pack, and a coupon for Slim Jims."
         )
+        print("Saeva’s gonna lose her mind when she sees this floaty.")
         state.inventory.append("Rubber duck floaty")
         state.inventory.append("Cheetah-print fanny pack")
         state.inventory.append("Slim Jim coupon")
@@ -353,11 +354,26 @@ def create_scenes():
 
     cop_chase = Scene(
         "cop_chase",
-        "Blue lights flash in the rearview as Travis floors it. (Scene pending.)",
+        "Blue lights flash in the rearview as Travis floors it. Sirens wail just behind the tailgate.",
         {
-            "keep running": "strip_club",
+            "keep running": "ditch_the_cops",
+            "floor it": "ditch_the_cops",
             "inventory": show_inventory,
         },
+    )
+
+    def ditch_the_cops_enter(state):
+        print(
+            "Travis spots a dirt mound and punches it. The truck launches like a mud-drenched comet into a nearby field."
+        )
+        print("Blue lights vanish behind him. Far ahead, neon letters spell out Melrose Hoes.")
+        state.move_to("strip_club")
+
+    ditch_the_cops = Scene(
+        "ditch_the_cops",
+        "The truck lands with a crunch of metal and weeds.",
+        {},
+        on_enter=ditch_the_cops_enter,
     )
 
     def mud_hole_enter(state):
@@ -477,6 +493,19 @@ def create_scenes():
             return "mole_cricket_showdown"
         return "stage_backroom"
 
+    def strip_club_enter(state):
+        if "Cheetah-print fanny pack" in state.inventory and not state.flags.get("fanny_pack_buff"):
+            print("Travis tightens the cheetah-print fanny pack, feelin' slick as an oil spill.")
+            state.flags["fanny_pack_buff"] = True
+            state.flags["travis_stats"]["flirt"] += 1
+
+    def talk_dancer(state):
+        if not state.flags.get("heard_bug_queen"):
+            print("A dancer leans close and whispers, \"There's a shortcut through the springs, but watch for the bug queen.\"")
+            state.flags["heard_bug_queen"] = True
+        else:
+            print("She just winks, already spilled the secret.")
+
     strip_club = Scene(
         "strip_club",
         (
@@ -484,9 +513,11 @@ def create_scenes():
         ),
         {
             "approach stage": attempt_stage,
+            "talk to dancer": talk_dancer,
             "leave": "dirt_road",
             "inventory": show_inventory,
         },
+        on_enter=strip_club_enter,
     )
 
     mole_cricket_showdown = Scene(
@@ -599,14 +630,7 @@ def create_scenes():
         print(
             "A huge hairy arm bursts from the brush\u2014Skunk Ape catches her mid-air and vanishes into the trees with his new bride."
         )
-        print("Travis lights a doobie with Saeva as they recline on the Rubber Duck Floaty.")
-        print("She stuffs the fanny pack with Slim Jims for the ride home.")
-        print('"Took you long enough, swamp god," she murmurs, licking salt off his neck.')
-        print("The spring water sparkles. The cicadas scream. All is right in Florida.")
-        print("\n--- THE END ---\n")
-        print("Together Forever. Memorial Day 2025.")
-        import sys
-        sys.exit(0)
+        state.move_to("ginnie_celebration")
 
     def water_bug_fight(state):
         required = ["Rubber duck floaty", "Cheetah-print fanny pack", "Slim Jim coupon"]
@@ -665,6 +689,22 @@ def create_scenes():
         },
     )
 
+    def ginnie_celebration_enter(state):
+        print("Travis lights a doobie with Saeva as they drift along on the Rubber Duck Floaty.")
+        print("They pass a jar of 'shine back and forth under the moonlight.")
+        print('Travis cackles, "Ain\'t no meth zombie strong enough to keep me from my girl."')
+        print("The spring water sparkles. The cicadas scream. All is right in Florida.")
+        print("\n--- THE END ---\n")
+        print("Together Forever. Memorial Day 2025.")
+        sys.exit(0)
+
+    ginnie_celebration = Scene(
+        "ginnie_celebration",
+        "The springs flow lazy and bright.",
+        {},
+        on_enter=ginnie_celebration_enter,
+    )
+
     return {
         scene.name: scene
         for scene in [
@@ -676,12 +716,14 @@ def create_scenes():
             walmart,
             walmart_after_zombies,
             cop_chase,
+            ditch_the_cops,
             strip_club,
             mole_cricket_showdown,
             stage_backroom,
             club_exit,
             ginnie_throne,
             ginnie_springs,
+            ginnie_celebration,
         ]
     }
 
