@@ -116,7 +116,7 @@ def create_scenes():
             "read note": lambda state: print(
                 "The note is written in lipstick on crumpled receipt paper. It reads:\n\n"
                 '\"Memorial Day. Ginnie Springs. Bring the ducky float, the shine, and that sinful tongue. I\u2019ll be waiting.\"\n\n'
-                "- Saeva \ud83d\udc8b"
+                "- Saeva \U0001F48B"
             ),
             "look in mirror": look_in_mirror,
             "inventory": show_inventory,
