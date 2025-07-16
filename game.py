@@ -674,8 +674,13 @@ def create_scenes():
                     print("She slaps Travis with a slick limb.")
                     travis_hp -= 1
         if travis_hp <= 0:
-            print("Travis tumbles into the spring, choking on defeat. He'll have to regroup back at the road.")
-            state.move_to("dirt_road")
+            print("Travis tumbles into the spring, choking on defeat. A faint neon glimmer beckons from the treeline.")
+            print("He limps along a hidden trail and somehow ends up back at Melrose Hoes.")
+            if not state.flags.get("got_dancer_charm"):
+                print("A dancer takes pity on him and slips a Rhinestone Dancer Charm into his palm.")
+                state.inventory.append("Rhinestone Dancer Charm")
+                state.flags["got_dancer_charm"] = True
+            state.move_to("strip_club")
             return
         water_bug_cutscene(state)
 
