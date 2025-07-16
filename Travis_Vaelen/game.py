@@ -31,8 +31,8 @@ class GameState:
         self.scenes = scenes
         self.current_scene = scenes[start]
         self.inventory = [
-            "Half-empty flask of 'shine",
-            "Bag of gator jerky",
+            "Half-empty bag of sour diesel",
+            "Bag of deer jerky",
         ]
         self.flags = {}
         self.flags["travis_stats"] = {
@@ -87,38 +87,40 @@ def create_scenes():
 
     def look_in_mirror(state):
         print("A golden mullet, gleaming like sunrise on the Suwannee")
-        print("Pit Viper sunglasses and a mustache sharp enough to slice jerky")
+        print("Pit Viper sunglasses and a mustache so nice, it's your mom's favorite ride.")
         print(
             "A flamingo tattoo on his right bicep with the words \u201cSaeva Venia\u201d inked beneath it"
         )
-        print("A lat spread so glorious, it was carved by ancient fanboat spirits")
+        print("A lat spread so glorious, Macho Man sheds a single tear in Valhalla and whispers, 'Ohhh yeahhh.'")
+        
 
     trailer = Scene(
         "trailer",
         (
             "Travis jolts awake in his sacred single-wide, air thick with mosquito fog and last night\u2019s regret. "
             "The walls are paper-thin, adorned with gator jawbones, fan-blown NASCAR posters, and a deer skull "
-            "wearing a camo trucker hat that reads 'Born to Mullet.'\n\n"
-            "The floor creaks under his boots as he steps past a tipped-over beer can pyramid and an ancient rug "
-            "stained with pork grease and maybe something unholy. A shrine of empty Slim Jim wrappers rests beneath "
+            "wearing a camo trucker hat that reads 'Freedom Ain't Free.'\n\n"
+            "The floor creaks under his boots as he steps past a tipped-over beer can pyramid and the Dude's rug "
+            "stained with bong water and maybe something unholy. A shrine of jars filled with sharks teeth rests beneath "
             "a faded Polaroid of him and Saeva\u2014her lipstick smudged on his cheek, his eyes full of feral devotion.\n\n"
             "A folded note lies on the counter, held down by a bottle of hot sauce and a shell casing.\n\n"
             "Outside, the swamp buzzes like a live wire. Travis\u2019s Toyota glows red in the morning sun, jacked and ready, "
             "but almost outta gas.\n\n"
-            "Somewhere in the ether, his cousin Malus growls with pride.\n"
+            "A gator sunbathes on the bank, eyeing him like a potential snack."
         ),
         {
             "step outside": "dirt_road",
             "leave": "dirt_road",
             "look in fridge": lambda state: print(
-                "The fridge hums like a dying possum. Inside: 2 hot dogs, 1 open Bud Heavy, a jar of expired pickled okra, "
-                "and a half-smoked joint in a butter dish labeled 'emergency.'"
+                "The fridge hums like a dying possum. Inside: 2 hot dogs, 1 bottle of Bud, a jar of pickled eggs, "
+                "and an enormous joint in a butter dish labeled 'emergency.'"
             ),
             "read note": lambda state: print(
-                "The note is written in lipstick on crumpled receipt paper. It reads:\n\n"
-                '\"Memorial Day. Ginnie Springs. Bring the ducky float, the shine, and that sinful tongue. I\u2019ll be waiting.\"\n\n'
-                "- Saeva \ud83d\udc8b"
-            ),
+    "The note is written in eyeliner on a crumpled Taco Bell napkin. It reads:\n\n"
+    "\"Memorial Day. Ginnie Springs. Bring the ducky float, the doobies, and that sinful tongue. I’ll be waiting.\"\n\n"
+    "- Saeva 💋"
+),
+
             "look in mirror": look_in_mirror,
             "inventory": show_inventory,
         },
@@ -127,7 +129,7 @@ def create_scenes():
     dirt_road = Scene(
         "dirt_road",
         (
-            "The road outside is nothing but sun-baked mud leading back toward civilization. "
+            "The road outside is nothing but sun-baked mud and palmettos leading back toward civilization. "
             "Mosquitoes buzz like chainsaws in the air. Travis’s truck squats in the driveway, thirsty."
         ),
         {
@@ -150,13 +152,13 @@ def create_scenes():
             print(
                 "Travis pushes open the smeared glass door of the Fill-'Er-Up. The "
                 "air reeks of burnt coffee and diesel fumes. Behind the counter, a "
-                "gap-toothed fella hawks lotto tickets and gator jerky with a grin."
+                "gap-toothed fella stacks cigarettes and blunts with a grin."
             )
             state.flags["visited_gas_station"] = True
 
     def buy_jerky(state):
-        print("Travis tosses a few crumpled bills on the counter for some Slim Jims.")
-        state.inventory.append("Slim Jims")
+        print("Travis tosses a few crumpled bills on the counter for some Moon Pies.")
+        state.inventory.append("Moon Pies")
 
     def talk_cashier(state):
         if not state.flags.get("heard_shortcut"):
@@ -300,7 +302,7 @@ def create_scenes():
                             [
                                 "Y'ain't got no teeth, you ain't got no power!",
                                 "Where's ma baby?! Where's MA BABY?!",
-                                "Y'all ever smoked a TV remote?",
+                                "Y'all ever drank Baylees from a shoe?",
                             ]
                         )
                     )
@@ -314,9 +316,9 @@ def create_scenes():
                 print("The zombie crumples to the asphalt.")
 
         print("\nAll three zombies lie motionless.")
-        print("Inside the store, Travis finds a Rubber duck floaty and a makeshift Gatorade Bong.")
+        print("Inside the store, Travis finds a Rubber duck floaty and a cheetah print fanny pack.")
         state.inventory.append("Rubber duck floaty")
-        state.inventory.append("Gatorade Bong")
+        state.inventory.append("Cheetah print fanny pack")
         print("Travis does the Gator Chomp to celebrate.")
         print('A park ranger approaches: "You that boy what saved them folks durin\u2019 Hurricane Andrew. Go on. Ginnie\'s waitin\'."')
         state.flags["beat_meth_zombies"] = True
@@ -348,15 +350,15 @@ def create_scenes():
     def mud_hole_enter(state):
         if not state.flags.get("visited_mud_hole"):
             print(
-                "Travis steps into the Mud Hole—a sun-scorched pit of beer cans, flip-flops, and lost dignity.\n"
-                "The air is thick with weed smoke and gnat swarms. A busted boombox plays Kid Rock on loop, its battery held in with duct tape."
+                "Travis steps into the Mud Hole. A sun-scorched pit of beer cans, flip-flops, and lost dignity.\n"
+                "The air is thick with humidity and gnat swarms. A busted boombox plays Kid Rock on loop, its battery held in with duct tape."
             )
             state.flags["visited_mud_hole"] = True
 
 
     def mole_cricket_fight(state):
         print(
-            "Out from a camo-tarp tent crawls the Mole Cricket, her eyes bloodshot and wild.\n"
+            "Out from the passenger seat of a jacked up truck crawls the Mole Cricket, her eyes bloodshot and wild.\n"
             "She wears cut-off overalls, a bikini top, and Crocs covered in mud. A blunt the size of a kielbasa dangles from her lips."
         )
         print(
