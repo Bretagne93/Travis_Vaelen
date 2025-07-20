@@ -1,0 +1,150 @@
+{
+  "minimum_charge": 500,
+  "bathroom": [
+    {
+      "label": "Tile",
+      "price": 3,
+      "unit": "sqft"
+    },
+    {
+      "label": "Lathe-backed Tile",
+      "price": 4,
+      "unit": "sqft"
+    },
+    {
+      "label": "Mirror (small)",
+      "price": 50,
+      "unit": "each"
+    },
+    {
+      "label": "Mirror (large)",
+      "price": 125,
+      "unit": "each"
+    },
+    {
+      "label": "Toilet",
+      "price": 50,
+      "unit": "each"
+    },
+    {
+      "label": "Wall-mount/Bidet Toilet",
+      "price": 100,
+      "unit": "each"
+    },
+    {
+      "label": "Fiberglass Enclosure (tub/shower)",
+      "price": 150,
+      "unit": "each"
+    }
+  ],
+  "kitchen": [
+    {
+      "label": "Backsplash",
+      "price": 3,
+      "unit": "sqft"
+    },
+    {
+      "label": "Cabinets",
+      "price": 300,
+      "unit": "each"
+    },
+    {
+      "label": "Countertops",
+      "price": 100,
+      "unit": "each"
+    },
+    {
+      "label": "Appliances",
+      "price": 75,
+      "unit": "each",
+      "notes": "must be disconnected by homeowner"
+    }
+  ],
+  "garage": [
+    {
+      "label": "Grinding (floor)",
+      "price": 0.75,
+      "unit": "sqft",
+      "notes": "dustless only"
+    }
+  ],
+  "patio": [
+    {
+      "label": "Chattahoochee Stone",
+      "price": 5,
+      "unit": "sqft"
+    },
+    {
+      "label": "Pavers",
+      "price": 2,
+      "unit": "sqft"
+    },
+    {
+      "label": "Tile",
+      "price": 3,
+      "unit": "sqft"
+    },
+    {
+      "label": "Concrete Grinding",
+      "price": 0.75,
+      "unit": "sqft"
+    },
+    {
+      "label": "Concrete Cutting",
+      "price": 30,
+      "unit": "lf"
+    }
+  ],
+  "living_room": [
+    {
+      "label": "Drywall",
+      "price": 1,
+      "unit": "sqft"
+    },
+    {
+      "label": "Plaster",
+      "price": 1.5,
+      "unit": "sqft"
+    },
+    {
+      "label": "Lathe Wall",
+      "price": 2,
+      "unit": "sqft"
+    },
+    {
+      "label": "Brick Stairs",
+      "price": 125,
+      "unit": "each"
+    },
+    {
+      "label": "Wood Stairs",
+      "price": 35,
+      "unit": "each"
+    },
+    {
+      "label": "Crown Molding",
+      "price": 2,
+      "unit": "lf"
+    },
+    {
+      "label": "Chair Rail",
+      "price": 1.5,
+      "unit": "lf"
+    },
+    {
+      "label": "Wainscoting",
+      "price": 3,
+      "unit": "sqft"
+    },
+    {
+      "label": "Ceiling Fan",
+      "price": 50,
+      "unit": "each"
+    },
+    {
+      "label": "Baseboards",
+      "price": 1,
+      "unit": "lf"
+    }
+  ]
+}
